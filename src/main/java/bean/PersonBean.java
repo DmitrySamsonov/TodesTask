@@ -12,14 +12,14 @@ public class PersonBean {
 
     private String name;
     private String surname;
+    private String patronymic;
     private int editPersonId;
     private String searchName = "";
     private String searchSurname = "";
 
     public List<Person> getPersonsList() {
         if (searchName.isEmpty() && searchSurname.isEmpty()) {
-//            return PersonDao.selectAll();
-            return PersonDao.search("","");
+            return PersonDao.selectAll();
         } else {
             return PersonDao.search(searchName, searchSurname);
         }
@@ -36,14 +36,16 @@ public class PersonBean {
     public String addNewPerson() {
         Person person = new Person();
         person.setName(name);
-        person.setSurName(surname);
+        person.setSurname(surname);
+        person.setPatronymic(patronymic);
         return PersonDao.createPerson(person);
     }
 
     public String editPersonById(Person person) {
         editPersonId = person.getId();
         name = person.getName();
-        surname = person.getSurName();
+        surname = person.getSurname();
+        patronymic = person.getPatronymic();
         return "pageEditPerson.xhtml";
     }
 
@@ -52,7 +54,8 @@ public class PersonBean {
         Person person = new Person();
         person.setId(editPersonId);
         person.setName(name);
-        person.setSurName(surname);
+        person.setSurname(surname);
+        person.setPatronymic(patronymic);
         return PersonDao.editPerson(person);
     }
 
@@ -76,6 +79,14 @@ public class PersonBean {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
     }
 
     public int getEditPersonId() {

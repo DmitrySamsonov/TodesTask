@@ -38,7 +38,6 @@
             <!--<artifactId>hibernate-core</artifactId>-->
             <!--<version>5.2.12.Final</version>-->
         <!--</dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.eclipse.persistence/eclipselink -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>

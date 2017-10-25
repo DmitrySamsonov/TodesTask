@@ -17,7 +17,8 @@
     <h2>Add new Person</h2>
     <h:form>
         <h:inputText id = "inputNewName" value = "#{personBean.name}"></h:inputText>
-        <h:inputText id = "inputNewSurName" value = "#{personBean.surname}"></h:inputText>
+        <h:inputText id = "inputNewSurname" value = "#{personBean.surname}"></h:inputText>
+        <h:inputText id = "inputNewPatronymic" value = "#{personBean.patronymic}"></h:inputText>
         <h:commandButton value = "Add_new_person" action="#{personBean.addNewPerson}">
         </h:commandButton>
     </h:form>

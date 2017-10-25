@@ -40,7 +40,8 @@ public class PersonDao {
 
         Person personManager = entitymanager.find(Person.class, person.getId());
         personManager.setName(person.getName());
-        personManager.setSurName(person.getSurName());
+        personManager.setSurname(person.getSurname());
+        personManager.setPatronymic(person.getPatronymic());
 
         entitymanager.getTransaction().commit();
         return "pagePersonsList.xhtml?faces-redirect=true";
@@ -50,13 +51,8 @@ public class PersonDao {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-//        Query query = entitymanager.createQuery("SELECT e FROM Person e");
-//        List<Person> personList = new LinkedList<Person>();
-//        personList = query.getResultList();
-
         Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
         List<Person> personList = query.getResultList();
-
 
         entitymanager.close();
         emfactory.close();
