@@ -1,0 +1,9 @@
+# Ignore IntelijIdea
+.idea/
+*.iml
+
+#ignore target folder, besides personUtil.war file
+target/*
+
+#not ignore .war
+!target/*.war

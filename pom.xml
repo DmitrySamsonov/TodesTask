@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.todes.personUtil</groupId>
+    <artifactId>personUtil</artifactId>
+    <packaging>war</packaging>
+    <version>1.0</version>
+    <name>personUtil Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.maven.plugin</groupId>
+            <artifactId>maven-glassfish-plugin</artifactId>
+            <version>2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--<version>5.2.12.Final</version>-->
+        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.eclipse.persistence/eclipselink -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>6.0</version>
+        </dependency>
+
+
+    </dependencies>
+    <build>
+        <finalName>personUtil</finalName>
+        <plugins>
+
+            <plugin>
+                <groupId>org.glassfish.maven.plugin</groupId>
+                <artifactId>maven-glassfish-plugin</artifactId>
+                <version>2.1</version>
+
+                <configuration>
+                    <!-- If you have CreateProcess error=193 when deploy project (under Windows),
+                        you have to rename/remove glassfish5/bin/asadmin (without extension)
+                        and glassfish5/glassfish/bin/asadmin (without extension) -->
+
+                    <glassfishDirectory>C:\\glassfish5\\glassfish\\</glassfishDirectory>
+                    <user>admin</user>
+                    <passwordFile>
+                        C:\\glassfish5\\glassfish\\domains\\domain1\\config\\domain-passwords
+                    </passwordFile>
+                    <domain>
+                        <name>domain1</name>
+                        <httpPort>8080</httpPort>
+                        <adminPort>4848</adminPort>
+                    </domain>
+                    <components>
+                        <component>
+                            <name>${project.artifactId}</name>
+                            <artifact>target/${project.build.finalName}</artifact>
+                        </component>
+                    </components>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

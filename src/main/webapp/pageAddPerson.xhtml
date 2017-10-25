@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+
+</h:head>
+<h:body>
+    <h:form>
+        <h:commandLink value = "Back to View" action="pagePersonsList"></h:commandLink>
+    </h:form>
+
+
+    <h2>Add new Person</h2>
+    <h:form>
+        <h:inputText id = "inputNewName" value = "#{personBean.name}"></h:inputText>
+        <h:inputText id = "inputNewSurName" value = "#{personBean.surname}"></h:inputText>
+        <h:commandButton value = "Add_new_person" action="#{personBean.addNewPerson}">
+        </h:commandButton>
+    </h:form>
+    <br/><br/>
+    <hr/>
+
+</h:body>
+</html>
