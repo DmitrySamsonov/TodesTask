@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "person")
@@ -11,6 +12,16 @@ public class Person {
     private String name;
     private String surname;
     private String patronymic;
+    private enum Sex {
+        Undefined,
+        Male,
+        Female
+    }
+    private Sex sex;
+    private LocalDate date;
+
+    @ManyToOne( targetEntity=Address.class )
+    private Address address;
 
     public int getId() {
         return id;
@@ -44,5 +55,27 @@ public class Person {
         this.patronymic = patronymic;
     }
 
+    public Sex getSex() {
+        return sex;
+    }
 
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }

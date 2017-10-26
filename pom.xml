@@ -71,7 +71,6 @@
                 <groupId>org.glassfish.maven.plugin</groupId>
                 <artifactId>maven-glassfish-plugin</artifactId>
                 <version>2.1</version>
-
                 <configuration>
                     <!-- If you have CreateProcess error=193 when deploy project (under Windows),
                         you have to rename/remove glassfish5/bin/asadmin (without extension)

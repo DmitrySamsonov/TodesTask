@@ -1,5 +1,6 @@
 package dao;
 
+import model.Address;
 import model.Person;
 
 import javax.persistence.*;
@@ -8,19 +9,27 @@ import java.util.List;
 
 public class PersonDao {
 
-    public static String createPerson(Object obj) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
+    public static String createPerson(Person person) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
-        entitymanager.persist(obj);
+        //Create Address Entity
+        Address address = new Address();
+        address.setHouseNumber(34);
+
+        //Store Address
+        entitymanager.persist(address);
+
+        person.setAddress(address);
+        entitymanager.persist(person);
 
         entitymanager.getTransaction().commit();
         return "pagePersonsList.xhtml?faces-redirect=true";
     }
 
     public static String deletePerson(int personId) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
@@ -34,7 +43,7 @@ public class PersonDao {
     }
 
     public static String editPerson(Person person) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
@@ -48,7 +57,7 @@ public class PersonDao {
     }
 
     public static List<Person> selectAll(){
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
         Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
@@ -61,7 +70,7 @@ public class PersonDao {
 
 
     public static List<Person> search(String searchName, String searchSurname) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
         StringBuilder sb = new StringBuilder();
@@ -83,7 +92,7 @@ public class PersonDao {
 
     //ненужен
     public static List<Person> getPersonById(int personId) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("HibernateJpa");
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
