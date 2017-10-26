@@ -72,14 +72,31 @@ public class StreetDao {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-        Query query = entitymanager.createNativeQuery("SELECT * FROM street", Street.class);
-        List<Street> streetList = query.getResultList();
+//        Query query = entitymanager.createNativeQuery("SELECT code FROM street WHERE street.name = 'Gaya'", Street.class);
+//        Object res = query.getSingleResult();
 
-        boolean isEm = streetList.isEmpty();
-        boolean size = streetList.size() == 0 ;
+        Query query = entitymanager.createQuery("SELECT s.code FROM Street s WHERE s.name = 'Gaya'");
+//        Street c = (Street)query.getSingleResult();
+        int c = Integer.valueOf(query.getSingleResult().toString());
+
+//        System.out.println(c.getCode());
+        System.out.println(c);
+
 
         entitymanager.close();
         emfactory.close();
 
+    }
+
+    public static int getCodeByName() {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
+        EntityManager entitymanager = emfactory.createEntityManager();
+
+        Query query = entitymanager.createQuery("SELECT s.code FROM Street s WHERE s.name = 'Gaya'");
+        int code = Integer.valueOf(query.getSingleResult().toString());
+
+        entitymanager.close();
+        emfactory.close();
+        return code;
     }
 }

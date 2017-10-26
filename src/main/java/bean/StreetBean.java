@@ -27,6 +27,8 @@ public class StreetBean {
         return StreetDao.selectAll().isEmpty();
     }
 
+
+
     public List<String> getNamesList() {
         return StreetDao.selectAllNames();
     }
@@ -35,6 +37,9 @@ public class StreetBean {
         return StreetDao.selectAll();
     }
 
+    public void calculateCode() {
+        code = StreetDao.getCodeByName();
+    }
 
     public int getCode() {
         return code;
@@ -51,4 +56,6 @@ public class StreetBean {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

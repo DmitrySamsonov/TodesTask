@@ -1,6 +1,7 @@
 package bean;
 
 import dao.PersonDao;
+import model.Address;
 import model.Person;
 
 import javax.faces.bean.*;
@@ -16,6 +17,9 @@ public class PersonBean {
     private int editPersonId;
     private String searchName = "";
     private String searchSurname = "";
+
+    @ManagedProperty(value = "#{addressBean}")
+    private AddressBean addressBean;
 
     public List<Person> getPersonsList() {
         if (searchName.isEmpty() && searchSurname.isEmpty()) {
@@ -38,7 +42,12 @@ public class PersonBean {
         person.setName(name);
         person.setSurname(surname);
         person.setPatronymic(patronymic);
-        return PersonDao.createPerson(person);
+
+        Address address = new Address();
+        addressBean.calculateStreetCode();
+        address.setStreetCode(addressBean.getStreetCode());
+        address.setHouseNumber(addressBean.getHouseNumber());
+        return PersonDao.createPerson(person, address);
     }
 
     public String editPersonById(Person person) {
@@ -113,6 +122,13 @@ public class PersonBean {
         this.searchSurname = searchSurname;
     }
 
+    public AddressBean getAddressBean() {
+        return addressBean;
+    }
+
+    public void setAddressBean(AddressBean addressBean) {
+        this.addressBean = addressBean;
+    }
 }
 
 

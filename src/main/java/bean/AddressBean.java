@@ -11,8 +11,15 @@ public class AddressBean {
     private int streetCode;
     private int houseNumber;
 
-    @ManagedProperty(value = "#{street}")
-    private Street streetBean;
+    @ManagedProperty(value = "#{streetBean}")
+    private StreetBean streetBean;
+
+
+    public void calculateStreetCode(){
+        streetBean.calculateCode();
+        streetCode = streetBean.getCode();
+    }
+
 
     public int getStreetCode() {
         return streetCode;
@@ -30,11 +37,11 @@ public class AddressBean {
         this.houseNumber = houseNumber;
     }
 
-    public Street getStreetBean() {
+    public StreetBean getStreetBean() {
         return streetBean;
     }
 
-    public void setStreetBean(Street streetBean) {
+    public void setStreetBean(StreetBean streetBean) {
         this.streetBean = streetBean;
     }
 }

@@ -9,18 +9,15 @@ import java.util.List;
 
 public class PersonDao {
 
-    public static String createPerson(Person person) {
+    public static String createPerson(Person person, Address address) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
         entitymanager.getTransaction().begin();
 
-        //Create Address Entity
-        Address address = new Address();
-        address.setHouseNumber(34);
-
         //Store Address
         entitymanager.persist(address);
 
+        //Store Person
         person.setAddress(address);
         entitymanager.persist(person);
 
