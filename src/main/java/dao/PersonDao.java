@@ -53,38 +53,70 @@ public class PersonDao {
         return "pagePersonsList.xhtml?faces-redirect=true";
     }
 
-    public static List<Person> selectAll(){
+    public static List<Object> selectAll() {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
         Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
-        List<Person> personList = query.getResultList();
+        List<Object> personList = query.getResultList();
+
+//        List<Object> personList = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
 
         entitymanager.close();
         emfactory.close();
         return personList;
     }
 
+    public static List selectAllwithAddress() {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
+        EntityManager entitymanager = emfactory.createEntityManager();
 
-    public static List<Person> search(String searchName, String searchSurname) {
+        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
+        List personList = query.getResultList();
+
+        entitymanager.close();
+        emfactory.close();
+        return personList;
+    }
+
+//    public static void main(String[] args) {
+//        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
+//        EntityManager entitymanager = emfactory.createEntityManager();
+//
+//        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
+//        List personList = query.getResultList();
+//
+//        List listObj = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
+//
+//        for (Object obj : listObj) {
+//
+//
+//
+//        }
+//
+//
+//        entitymanager.close();
+//        emfactory.close();
+//    }
+
+
+    public static List<Object> search(String searchName, String searchSurname) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT * FROM person WHERE");
-        sb.append(" name LIKE '" + searchName +"%'");
-        sb.append(" AND surname LIKE '" + searchSurname +"%'");
+        sb.append(" name LIKE '" + searchName + "%'");
+        sb.append(" AND surname LIKE '" + searchSurname + "%'");
 
         Query query = entitymanager.createNativeQuery(sb.toString(), Person.class);
-        List<Person> personList = query.getResultList();
+        List<Object> personList = query.getResultList();
 
 
         entitymanager.close();
         emfactory.close();
         return personList;
     }
-
-
 
 
     //ненужен

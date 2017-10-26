@@ -2,6 +2,7 @@ package model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "person")
@@ -12,13 +13,13 @@ public class Person {
     private String name;
     private String surname;
     private String patronymic;
-    private enum Sex {
+    public enum Sex {
         Undefined,
         Male,
         Female
     }
     private Sex sex;
-    private LocalDate date;
+    private Date date;
 
     @ManyToOne( targetEntity=Address.class )
     private Address address;
@@ -63,11 +64,11 @@ public class Person {
         this.sex = sex;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

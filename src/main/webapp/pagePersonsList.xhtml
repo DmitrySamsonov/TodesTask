@@ -53,6 +53,16 @@
         </p:column>
 
         <p:column>
+            <f:facet name="header">Sex</f:facet>
+            #{person.sex}
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">Date</f:facet>
+            #{person.date}
+        </p:column>
+
+        <p:column>
             <f:facet name="header">Edit</f:facet>
             <h:commandButton action="#{personBean.editPersonById(person)}" value="Edit" styleClass="btn btn-primary"/>
         </p:column>

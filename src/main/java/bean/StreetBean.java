@@ -38,7 +38,7 @@ public class StreetBean {
     }
 
     public void calculateCode() {
-        code = StreetDao.getCodeByName();
+        code = StreetDao.getCodeByName(name);
     }
 
     public int getCode() {

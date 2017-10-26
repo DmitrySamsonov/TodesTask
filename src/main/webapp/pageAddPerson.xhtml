@@ -10,7 +10,7 @@
 </h:head>
 <h:body>
     <h:form>
-        <h:commandLink value = "Back to View" action="pagePersonsList"></h:commandLink>
+        <h:commandLink value="Back to View" action="pagePersonsList.xhtml?faces-redirect=true"></h:commandLink>
     </h:form>
 
 
@@ -18,30 +18,43 @@
     <h:form>
         <div>
             <p>Name</p>
-            <h:inputText value = "#{personBean.name}"></h:inputText>
+            <h:inputText value="#{personBean.name}"></h:inputText>
         </div>
         <div>
             <p>Surname</p>
-            <h:inputText value = "#{personBean.surname}"></h:inputText>
+            <h:inputText value="#{personBean.surname}"></h:inputText>
         </div>
         <div>
             <p>Patronymic</p>
-            <h:inputText value = "#{personBean.patronymic}"></h:inputText>
+            <h:inputText value="#{personBean.patronymic}"></h:inputText>
+        </div>
+        <div>
+            <p>Sex</p>
+            <p:selectOneRadio value="#{personBean.sex}" >
+                <f:selectItems value="#{personBean.getSexStates()}"/>
+            </p:selectOneRadio>
+        </div>
+
+        <div>
+            <p>Date of birth</p>
+            <h:inputText value="#{personBean.date}">
+                <f:convertDateTime type="date" dateStyle="full" pattern="dd-mm-yyyy"/>
+            </h:inputText>
         </div>
 
         <div>
             <p>Street</p>
             <h:selectOneMenu value="#{streetBean.name}">
-                <f:selectItems value="#{streetBean.getNamesList()}" />
+                <f:selectItems value="#{streetBean.getNamesList()}"/>
             </h:selectOneMenu>
         </div>
 
         <div>
             <p>houseNumber</p>
-            <h:inputText value = "#{addressBean.houseNumber}"></h:inputText>
+            <h:inputText value="#{addressBean.houseNumber}"></h:inputText>
         </div>
 
-        <h:commandButton value = "Add_new_person" action="#{personBean.addNewPerson}">
+        <h:commandButton value="Add_new_person" action="#{personBean.addNewPerson}">
         </h:commandButton>
     </h:form>
     <br/><br/>

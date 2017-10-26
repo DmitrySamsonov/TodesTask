@@ -6,6 +6,7 @@ import model.Person;
 
 import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
+import java.util.Date;
 import java.util.List;
 
 @ManagedBean
@@ -14,6 +15,8 @@ public class PersonBean {
     private String name;
     private String surname;
     private String patronymic;
+    private Person.Sex sex = Person.Sex.Undefined;
+    private Date date;
     private int editPersonId;
     private String searchName = "";
     private String searchSurname = "";
@@ -21,7 +24,7 @@ public class PersonBean {
     @ManagedProperty(value = "#{addressBean}")
     private AddressBean addressBean;
 
-    public List<Person> getPersonsList() {
+    public List<Object> getPersonsList() {
         if (searchName.isEmpty() && searchSurname.isEmpty()) {
             return PersonDao.selectAll();
         } else {
@@ -30,7 +33,7 @@ public class PersonBean {
     }
 
     public String method() {
-        if ( searchName.isEmpty() && searchSurname.isEmpty()) {
+        if (searchName.isEmpty() && searchSurname.isEmpty()) {
             return "cc = " + searchName + " true";
         } else {
             return "cc = " + searchName + " false";
@@ -42,6 +45,8 @@ public class PersonBean {
         person.setName(name);
         person.setSurname(surname);
         person.setPatronymic(patronymic);
+        person.setSex(sex);
+        person.setDate(date);
 
         Address address = new Address();
         addressBean.calculateStreetCode();
@@ -96,6 +101,26 @@ public class PersonBean {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public Person.Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Person.Sex sex) {
+        this.sex = sex;
+    }
+
+    public Person.Sex[] getSexStates () {
+        return Person.Sex.values();
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getEditPersonId() {

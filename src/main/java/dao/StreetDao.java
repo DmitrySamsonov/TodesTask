@@ -88,11 +88,12 @@ public class StreetDao {
 
     }
 
-    public static int getCodeByName() {
+    public static int getCodeByName(String streetName) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-        Query query = entitymanager.createQuery("SELECT s.code FROM Street s WHERE s.name = 'Gaya'");
+
+        Query query = entitymanager.createQuery("SELECT s.code FROM Street s WHERE s.name = '" + streetName + "'");
         int code = Integer.valueOf(query.getSingleResult().toString());
 
         entitymanager.close();
