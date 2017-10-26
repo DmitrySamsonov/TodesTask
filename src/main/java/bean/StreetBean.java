@@ -23,10 +23,10 @@ public class StreetBean {
             StreetDao.fillStreetsByDefault();
         }
     }
+
     private boolean isEmptyDataInStreets() {
         return StreetDao.selectAll().isEmpty();
     }
-
 
 
     public List<String> getNamesList() {

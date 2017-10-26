@@ -3,7 +3,10 @@ package dao;
 import model.Address;
 import model.Person;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.util.LinkedList;
 import java.util.List;
 

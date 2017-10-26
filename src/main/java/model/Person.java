@@ -1,7 +1,6 @@
 package model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,15 +12,16 @@ public class Person {
     private String name;
     private String surname;
     private String patronymic;
+
     public enum Sex {
-        Undefined,
         Male,
         Female
     }
+
     private Sex sex;
     private Date date;
 
-    @ManyToOne( targetEntity=Address.class )
+    @ManyToOne(targetEntity = Address.class)
     private Address address;
 
     public int getId() {

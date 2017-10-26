@@ -3,7 +3,6 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://java.sun.com/jsf/html">
 <h:head>
 
@@ -30,7 +29,7 @@
         </div>
         <div>
             <p>Sex</p>
-            <p:selectOneRadio value="#{personBean.sex}" >
+            <p:selectOneRadio value="#{personBean.sex}" onblur="false">
                 <f:selectItems value="#{personBean.getSexStates()}"/>
             </p:selectOneRadio>
         </div>
@@ -38,7 +37,7 @@
         <div>
             <p>Date of birth</p>
             <h:inputText value="#{personBean.date}">
-                <f:convertDateTime type="date" dateStyle="full" pattern="dd-mm-yyyy"/>
+                <f:convertDateTime type="date" dateStyle="full" pattern="dd.MM.yyyy"/>
             </h:inputText>
         </div>
 

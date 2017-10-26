@@ -4,7 +4,8 @@ import dao.PersonDao;
 import model.Address;
 import model.Person;
 
-import javax.faces.bean.*;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import java.util.Date;
 import java.util.List;
@@ -15,11 +16,13 @@ public class PersonBean {
     private String name;
     private String surname;
     private String patronymic;
-    private Person.Sex sex = Person.Sex.Undefined;
+    private Person.Sex sex;
     private Date date;
     private int editPersonId;
     private String searchName = "";
     private String searchSurname = "";
+    private String searchStreet = "";
+    private String searchHouseNumber = "";
 
     @ManagedProperty(value = "#{addressBean}")
     private AddressBean addressBean;
@@ -111,7 +114,7 @@ public class PersonBean {
         this.sex = sex;
     }
 
-    public Person.Sex[] getSexStates () {
+    public Person.Sex[] getSexStates() {
         return Person.Sex.values();
     }
 
@@ -145,6 +148,22 @@ public class PersonBean {
 
     public void setSearchSurname(String searchSurname) {
         this.searchSurname = searchSurname;
+    }
+
+    public String getSearchStreet() {
+        return searchStreet;
+    }
+
+    public void setSearchStreet(String searchStreet) {
+        this.searchStreet = searchStreet;
+    }
+
+    public String getSearchHouseNumber() {
+        return searchHouseNumber;
+    }
+
+    public void setSearchHouseNumber(String searchHouseNumber) {
+        this.searchHouseNumber = searchHouseNumber;
     }
 
     public AddressBean getAddressBean() {

@@ -1,7 +1,5 @@
 package bean;
 
-import model.Street;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
@@ -15,7 +13,7 @@ public class AddressBean {
     private StreetBean streetBean;
 
 
-    public void calculateStreetCode(){
+    public void calculateStreetCode() {
         streetBean.calculateCode();
         streetCode = streetBean.getCode();
     }
