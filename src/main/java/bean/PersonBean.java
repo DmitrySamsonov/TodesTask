@@ -7,7 +7,7 @@ import model.Person;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,10 +29,12 @@ public class PersonBean {
     private AddressBean addressBean;
 
     public List<Object> getPersonsList() {
-        if (searchName.isEmpty() && searchSurname.isEmpty()) {
+        if (searchName.isEmpty() && searchSurname.isEmpty() && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
             return PersonDao.selectAll();
         } else {
-            return PersonDao.search(searchName, searchSurname);
+
+
+            return PersonDao.search(searchName, searchSurname, searchStreet, searchHouseNumber);
         }
     }
 

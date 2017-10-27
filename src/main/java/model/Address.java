@@ -11,8 +11,8 @@ public class Address {
     private int streetCode;
     private int houseNumber;
 
-//    @OneToMany( targetEntity=Person.class )
-//    private List personList;
+    @ManyToOne(targetEntity = Street.class)
+    private Street street;
 
     public int getId() {
         return id;
@@ -34,11 +34,11 @@ public class Address {
         this.houseNumber = houseNumber;
     }
 
-//    public List getPersonList() {
-//        return personList;
-//    }
+    public Street getStreet() {
+        return street;
+    }
 
-//    public void setPersonList(List personList) {
-//        this.personList = personList;
-//    }
+    public void setStreet(Street street) {
+        this.street = street;
+    }
 }

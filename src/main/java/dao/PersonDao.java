@@ -88,7 +88,10 @@ public class PersonDao {
 //        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
 //        List personList = query.getResultList();
 
-        List listObj = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT p, a  FROM Person p LEFT JOIN p.address a WHERE ");
+        sb.append(" p.name Like 'a%' ");
+        List listObj = entitymanager.createQuery(sb.toString()).getResultList();
 
 //        for(Vector v :listObj){
 //            System.out.println("a");
@@ -108,16 +111,24 @@ public class PersonDao {
     }
 
 
-    public static List<Object> search(String searchName, String searchSurname) {
+    public static List<Object> search(String searchName, String searchSurname, String searchStreet, String searchHouseNumber) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("SELECT * FROM person WHERE");
-        sb.append(" name LIKE '" + searchName + "%'");
-        sb.append(" AND surname LIKE '" + searchSurname + "%'");
 
-        Query query = entitymanager.createNativeQuery(sb.toString(), Person.class);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("SELECT p, a  FROM Person p LEFT JOIN p.address a WHERE ");
+        sb.append(" p.name LIKE '" + searchName + "%'");
+        sb.append(" AND p.surname LIKE '" + searchSurname + "%'");
+        if( !searchHouseNumber.isEmpty()){
+            try{
+                int searchHouseNumberInt = Integer.parseInt(searchHouseNumber);
+                sb.append(" AND a.houseNumber = " + searchHouseNumberInt);
+            }catch (NumberFormatException ignore) { /*NOP*/ }
+        }
+
+        Query query = entitymanager.createQuery(sb.toString());
         List<Object> personList = query.getResultList();
 
 
