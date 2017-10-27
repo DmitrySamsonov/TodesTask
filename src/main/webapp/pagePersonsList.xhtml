@@ -89,7 +89,7 @@
                 <f:facet name="header">Delete</f:facet>
                 <h:commandButton action="#{personBean.deletePersonById()}" value="Delete"
                                  styleClass="btn btn-danger">
-                    <f:param name="PersonId" value="#{person.getPersonObj(obj).id}"/>
+                    <f:param name="PersonId" value="#{personBean.getPersonObj(obj).id}"/>
                 </h:commandButton>
             </p:column>
 
@@ -111,6 +111,10 @@
         <div>
             <p>Street</p>
             <h:inputText id="searchStreet" value="#{personBean.searchStreet}"></h:inputText>
+            <!--<h:selectOneMenu value="# {personBean.searchStreet}">-->
+                <!--<f:selectItems value="" />-->
+                <!--<f:selectItems value="# {streetBean.getNamesList()}" />-->
+            <!--</h:selectOneMenu>-->
         </div>
         <div>
             <p>House Number</p>

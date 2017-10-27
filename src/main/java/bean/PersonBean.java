@@ -30,10 +30,12 @@ public class PersonBean {
 
     public List<Object> getPersonsList() {
         if (searchName.isEmpty() && searchSurname.isEmpty() && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+//        if (searchName.isEmpty() && searchSurname.isEmpty() && searchHouseNumber.isEmpty()) {
             return PersonDao.selectAll();
         } else {
 
 
+//            return PersonDao.search(searchName, searchSurname, "", searchHouseNumber);
             return PersonDao.search(searchName, searchSurname, searchStreet, searchHouseNumber);
         }
     }

@@ -115,12 +115,15 @@ public class PersonDao {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-
-
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT p, a  FROM Person p LEFT JOIN p.address a WHERE ");
         sb.append(" p.name LIKE '" + searchName + "%'");
         sb.append(" AND p.surname LIKE '" + searchSurname + "%'");
+        if(!searchStreet.isEmpty()) {
+            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = (SELECT u.name FROM Street u WHERE u.name LIKE '" + searchStreet + "%'))");
+//            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = (SELECT u.name FROM Street u WHERE u.name LIKE 'Kulman%'))");
+        }
+
         if( !searchHouseNumber.isEmpty()){
             try{
                 int searchHouseNumberInt = Integer.parseInt(searchHouseNumber);
