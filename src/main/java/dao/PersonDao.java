@@ -120,7 +120,7 @@ public class PersonDao {
         sb.append(" p.name LIKE '" + searchName + "%'");
         sb.append(" AND p.surname LIKE '" + searchSurname + "%'");
         if(!searchStreet.isEmpty()) {
-            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = (SELECT u.name FROM Street u WHERE u.name LIKE '" + searchStreet + "%'))");
+            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = '" + searchStreet + "')");
 //            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = (SELECT u.name FROM Street u WHERE u.name LIKE 'Kulman%'))");
         }
 

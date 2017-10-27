@@ -61,7 +61,9 @@
 
             <p:column>
                 <f:facet name="header">Date</f:facet>
-                #{personBean.getPersonObj(obj).date}
+                <h:outputText value="#{personBean.getPersonObj(obj).date}" >
+                    <f:convertDateTime pattern="dd.MM.yyyy" />
+                </h:outputText>
             </p:column>
 
             <p:column>
@@ -110,18 +112,18 @@
         </div>
         <div>
             <p>Street</p>
-            <h:inputText id="searchStreet" value="#{personBean.searchStreet}"></h:inputText>
-            <!--<h:selectOneMenu value="# {personBean.searchStreet}">-->
-                <!--<f:selectItems value="" />-->
-                <!--<f:selectItems value="# {streetBean.getNamesList()}" />-->
-            <!--</h:selectOneMenu>-->
+            <h:selectOneMenu id="searchStreet" value="#{personBean.searchStreet}">
+                <f:selectItem itemLabel="---"/>
+                <f:selectItems value="#{streetBean.getNamesList()}" />
+            </h:selectOneMenu>
         </div>
         <div>
             <p>House Number</p>
             <h:inputText id="searchHouseNumber" value="#{personBean.searchHouseNumber}"></h:inputText>
         </div>
 
-        <f:ajax event="keyup" execute="searchName searchSurname" render="personsForm"/>
+        <f:ajax event="keyup" execute="searchName searchSurname searchStreet searchHouseNumber" render="personsForm cc"/>
+        <f:ajax event="click" execute="searchStreet" render="personsForm cc"/>
     </h:form>
 
     <h:outputText id="cc" value="#{personBean.method()}"/>

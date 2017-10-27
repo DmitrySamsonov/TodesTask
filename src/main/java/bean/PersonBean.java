@@ -29,6 +29,9 @@ public class PersonBean {
     private AddressBean addressBean;
 
     public List<Object> getPersonsList() {
+        if (searchStreet == null) {
+            searchStreet = "";
+        }
         if (searchName.isEmpty() && searchSurname.isEmpty() && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
 //        if (searchName.isEmpty() && searchSurname.isEmpty() && searchHouseNumber.isEmpty()) {
             return PersonDao.selectAll();
@@ -41,10 +44,11 @@ public class PersonBean {
     }
 
     public String method() {
-        if (searchName.isEmpty() && searchSurname.isEmpty()) {
-            return "cc = " + searchName + " true";
+
+        if (searchStreet == null) {
+            return "s == null";
         } else {
-            return "cc = " + searchName + " false";
+            return "s != null  s= " + searchStreet;
         }
     }
 
