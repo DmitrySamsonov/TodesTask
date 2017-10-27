@@ -68,25 +68,25 @@ public class StreetDao {
         return streetList;
     }
 
-    public static void main(String[] args) {
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
-        EntityManager entitymanager = emfactory.createEntityManager();
-
-//        Query query = entitymanager.createNativeQuery("SELECT code FROM street WHERE street.name = 'Gaya'", Street.class);
-//        Object res = query.getSingleResult();
-
-        Query query = entitymanager.createQuery("SELECT s.code FROM Street s WHERE s.name = 'Gaya'");
-//        Street c = (Street)query.getSingleResult();
-        int c = Integer.valueOf(query.getSingleResult().toString());
-
-//        System.out.println(c.getCode());
-        System.out.println(c);
-
-
-        entitymanager.close();
-        emfactory.close();
-
-    }
+//    public static void main(String[] args) {
+//        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
+//        EntityManager entitymanager = emfactory.createEntityManager();
+//
+////        Query query = entitymanager.createNativeQuery("SELECT code FROM street WHERE street.name = 'Gaya'", Street.class);
+////        Object res = query.getSingleResult();
+//
+//        Query query = entitymanager.createQuery("SELECT s.code FROM Street s WHERE s.name = 'Gaya'");
+////        Street c = (Street)query.getSingleResult();
+//        int c = Integer.valueOf(query.getSingleResult().toString());
+//
+////        System.out.println(c.getCode());
+//        System.out.println(c);
+//
+//
+//        entitymanager.close();
+//        emfactory.close();
+//
+//    }
 
     public static int getCodeByName(String streetName) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
@@ -100,4 +100,18 @@ public class StreetDao {
         emfactory.close();
         return code;
     }
+
+    public static String getNameByCode(int streetCode) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
+        EntityManager entitymanager = emfactory.createEntityManager();
+
+
+        Query query = entitymanager.createQuery("SELECT s.name FROM Street s WHERE s.code = '" + streetCode + "'");
+        String name = query.getSingleResult().toString();
+
+        entitymanager.close();
+        emfactory.close();
+        return name;
+    }
+    
 }

@@ -7,8 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class PersonDao {
 
@@ -60,10 +59,10 @@ public class PersonDao {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
-        List<Object> personList = query.getResultList();
+//        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
+//        List<Object> personList = query.getResultList();
 
-//        List<Object> personList = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
+        List<Object> personList = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
 
         entitymanager.close();
         emfactory.close();
@@ -82,25 +81,31 @@ public class PersonDao {
         return personList;
     }
 
-//    public static void main(String[] args) {
-//        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
-//        EntityManager entitymanager = emfactory.createEntityManager();
-//
+    public static void main(String[] args) {
+        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
+        EntityManager entitymanager = emfactory.createEntityManager();
+
 //        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
 //        List personList = query.getResultList();
-//
-//        List listObj = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
-//
-//        for (Object obj : listObj) {
-//
-//
+
+        List listObj = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
+
+//        for(Vector v :listObj){
+//            System.out.println("a");
 //
 //        }
-//
-//
-//        entitymanager.close();
-//        emfactory.close();
-//    }
+        Iterator iter = listObj.listIterator();
+        if(iter.hasNext()){
+            Object item = iter.next();
+            Object[] row = (Object[]) item;
+            Person personOb = (Person) row[0];
+            Address addressOb = (Address) row[1];
+            System.out.println("yes)");
+        }
+
+        entitymanager.close();
+        emfactory.close();
+    }
 
 
     public static List<Object> search(String searchName, String searchSurname) {

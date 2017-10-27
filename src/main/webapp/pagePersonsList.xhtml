@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <!--<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"-->
 <!--xmlns:f="http://java.sun.com/jsf/core">-->
@@ -26,58 +27,134 @@
 </h:head>
 <h:body>
     <center><h2><p:outputLabel value="Persons List"/></h2></center>
+    <!--<h:form id="personsForm">-->
+        <!--<p:dataTable id="personsTable" value="# -{- personBean.getPersonsList()}" var="person"-->
+                     <!--style="width: 80%; position: center; text-align: center;"-->
+                     <!--styleClass="employeeTable"-->
+                     <!--headerClass="employeeTableHeader"-->
+                     <!--rowClasses="employeeTableOddRow,employeeTableEvenRow">-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">ID</f:facet>-->
+                <!--# +{+ person.id}-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Name</f:facet>-->
+                <!--# +{+ person.name}-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Surname</f:facet>-->
+                <!--# +{+ person.surname}-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Patronymic</f:facet>-->
+                <!--# +{+ person.patronymic}-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Sex</f:facet>-->
+                <!--# +{+ person.sex}-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Date</f:facet>-->
+                <!--# +{+ person.date}-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Edit</f:facet>-->
+                <!--<h:commandButton action="# +{+ personBean.editPersonById(person)}" value="Edit"-->
+                                 <!--styleClass="btn btn-primary"/>-->
+            <!--</p:column>-->
+
+            <!--<p:column>-->
+                <!--<f:facet name="header">Delete</f:facet>-->
+                <!--<h:commandButton action="# +{+ personBean.deletePersonById()}" value="Delete" styleClass="btn btn-danger">-->
+                    <!--<f:param name="PersonId" value="# +{+ person.id}"/>-->
+                <!--</h:commandButton>-->
+            <!--</p:column>-->
+        <!--</p:dataTable>-->
+        <!--<h:commandButton value="Add new person" action="pageAddPerson"></h:commandButton>-->
+    <!--</h:form>-->
+
+
+
+
+
     <h:form id="personsForm">
-        <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="person"
+        <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="obj"
                      style="width: 80%; position: center; text-align: center;"
                      styleClass="employeeTable"
                      headerClass="employeeTableHeader"
                      rowClasses="employeeTableOddRow,employeeTableEvenRow">
 
-            <p:column>
-                <f:facet name="header">ID</f:facet>
-                #{person.id}
-            </p:column>
 
-            <p:column>
-                <f:facet name="header">Name</f:facet>
-                #{person.name}
-            </p:column>
+                <p:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{personBean.getPersonObj(obj).id}
+                </p:column>
 
-            <p:column>
-                <f:facet name="header">Surname</f:facet>
-                #{person.surname}
-            </p:column>
+                <p:column>
+                    <f:facet name="header">Name</f:facet>
+                    #{personBean.getPersonObj(obj).name}
+                </p:column>
 
-            <p:column>
-                <f:facet name="header">Patronymic</f:facet>
-                #{person.patronymic}
-            </p:column>
+                <p:column>
+                    <f:facet name="header">Surname</f:facet>
+                    #{personBean.getPersonObj(obj).surname}
+                </p:column>
 
-            <p:column>
-                <f:facet name="header">Sex</f:facet>
-                #{person.sex}
-            </p:column>
+                <p:column>
+                    <f:facet name="header">Patronymic</f:facet>
+                    #{personBean.getPersonObj(obj).patronymic}
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">Sex</f:facet>
+                    #{personBean.getPersonObj(obj).sex}
+                </p:column>
 
             <p:column>
                 <f:facet name="header">Date</f:facet>
-                #{person.date}
+                #{personBean.getPersonObj(obj).date}
             </p:column>
 
             <p:column>
-                <f:facet name="header">Edit</f:facet>
-                <h:commandButton action="#{personBean.editPersonById(person)}" value="Edit"
-                                 styleClass="btn btn-primary"/>
+                <f:facet name="header">House Number</f:facet>
+                #{addressBean.getAddressObj(obj).houseNumber}
             </p:column>
 
             <p:column>
-                <f:facet name="header">Delete</f:facet>
-                <h:commandButton action="#{personBean.deletePersonById()}" value="Delete" styleClass="btn btn-danger">
-                    <f:param name="PersonId" value="#{person.id}"/>
-                </h:commandButton>
+                <f:facet name="header">StreetCode</f:facet>
+                #{addressBean.getAddressObj(obj).streetCode}
             </p:column>
+
+            <p:column>
+                <f:facet name="header">Street</f:facet>
+                #{addressBean.getStreetNameByCode(obj)}
+            </p:column>
+
+
         </p:dataTable>
         <h:commandButton value="Add new person" action="pageAddPerson"></h:commandButton>
     </h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <h2><p:outputLabel value="Search"/></h2>

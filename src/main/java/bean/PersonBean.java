@@ -7,7 +7,8 @@ import model.Person;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import java.util.Date;
+import java.sql.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @ManagedBean
@@ -41,6 +42,13 @@ public class PersonBean {
         } else {
             return "cc = " + searchName + " false";
         }
+    }
+
+    public Person getPersonObj(Object item){
+        Object[] row = (Object[]) item;
+        Person personObj = (Person) row[0];
+//        Address addressOb = (Address) row[1];
+        return personObj;
     }
 
     public String addNewPerson() {

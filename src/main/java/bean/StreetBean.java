@@ -29,6 +29,7 @@ public class StreetBean {
     }
 
 
+
     public List<String> getNamesList() {
         return StreetDao.selectAllNames();
     }
@@ -40,6 +41,11 @@ public class StreetBean {
     public void calculateCode() {
         code = StreetDao.getCodeByName(name);
     }
+
+    public String getStreetNameByCode(int code){
+        return StreetDao.getNameByCode(code);
+    }
+
 
     public int getCode() {
         return code;
