@@ -3,12 +3,17 @@ package bean;
 import dao.PersonDao;
 import model.Address;
 import model.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
+
+
 
 @ManagedBean
 public class PersonBean {
@@ -29,49 +34,66 @@ public class PersonBean {
     @ManagedProperty(value = "#{addressBean}")
     private AddressBean addressBean;
 
-    public List<Object> getPersonsList() {
-        if (searchStreet == null) {
-            searchStreet = "";
-        }
+    private static final Logger logger = LogManager.getLogger("HelloWorld");
 
-        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
-                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+    public List<Object> getPersonsList() {
+
+        logger.info("Hello, world!");
+        logger.error("test error");
+
+        try{
+
+
+            if (searchStreet == null) {
+                searchStreet = "";
+            }
+
+            if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
+                    && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
 
 //        if (searchName.isEmpty() && searchSurname.isEmpty() && searchHouseNumber.isEmpty()) {
-            return PersonDao.selectAll();
-        }
-        else {
+                return PersonDao.selectAll();
+            }
+            else {
 
 
-         return PersonDao.search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
+                return PersonDao.search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
+            }
+
+        }catch (Exception e){
+            logger.error("Exception in getPersonsList() " + e);
+            return new LinkedList<Object>();
         }
+
     }
 
     public String method() {
         String s="";
-        if (searchName == null) {
-            s = "searchName == null";
-        } else {
-            s = "searchName != null  searchName= " + searchName;
-        }
+        try{
 
-        if (searchDateFrom == null) {
-            s += "   +++   searchDateFrom == null";
-        } else {
-            s += "    +++      searchDateFrom != null  searchDateFrom= " + searchDateFrom;
-        }
-        if (searchDateTo == null) {
-            s += "  +++   searchDateTo == null";
-        } else {
-            s += "   +++  searchDateTo != null  searchDateTo= " + searchDateTo;
-        }
-        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
-                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+            if (searchName == null) {
+                s = "searchName == null";
+            } else {
+                s = "searchName != null  searchName= " + searchName;
+            }
 
-            s += "    if = 1 (selectAll)";
-        } else {
-            s += "    if = 2 (search)";
-        }
+            if (searchDateFrom == null) {
+                s += "   +++   searchDateFrom == null";
+            } else {
+                s += "    +++      searchDateFrom != null  searchDateFrom= " + searchDateFrom;
+            }
+            if (searchDateTo == null) {
+                s += "  +++   searchDateTo == null";
+            } else {
+                s += "   +++  searchDateTo != null  searchDateTo= " + searchDateTo;
+            }
+            if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
+                    && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+
+                s += "    if = 1 (selectAll)";
+            } else {
+                s += "    if = 2 (search)";
+            }
 
 //        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
 //                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
@@ -80,6 +102,10 @@ public class PersonBean {
 //        else {
 //            s = "iffffffffffffffffff    2";
 //        }
+        }catch (Exception e){
+            logger.error("Exception in method() "+e);
+        }
+
         return s;
     }
 
