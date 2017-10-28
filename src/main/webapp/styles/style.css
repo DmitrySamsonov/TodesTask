@@ -1,0 +1,13 @@
+body {
+    background-image: url("../images/night_city.jpg");
+    height: 100%;
+}
+
+form label {
+    color: black;
+    font-size: 18px;
+}
+
+.search-form {
+    /*margin-top: 3%;*/
+}

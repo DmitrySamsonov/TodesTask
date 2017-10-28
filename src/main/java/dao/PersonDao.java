@@ -59,8 +59,6 @@ public class PersonDao {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
-//        Query query = entitymanager.createNativeQuery("SELECT * FROM person", Person.class);
-//        List<Object> personList = query.getResultList();
 
         List<Object> personList = entitymanager.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
 
@@ -95,7 +93,6 @@ public class PersonDao {
 
 //        for(Vector v :listObj){
 //            System.out.println("a");
-//
 //        }
         Iterator iter = listObj.listIterator();
         if(iter.hasNext()){
@@ -111,7 +108,8 @@ public class PersonDao {
     }
 
 
-    public static List<Object> search(String searchName, String searchSurname, String searchStreet, String searchHouseNumber) {
+    public static List<Object> search(String searchName, String searchSurname, String searchDateFrom,
+                                      String searchDateTo,String searchStreet, String searchHouseNumber) {
         EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JpaUnit");
         EntityManager entitymanager = emfactory.createEntityManager();
 
@@ -119,6 +117,14 @@ public class PersonDao {
         sb.append("SELECT p, a  FROM Person p LEFT JOIN p.address a WHERE ");
         sb.append(" p.name LIKE '" + searchName + "%'");
         sb.append(" AND p.surname LIKE '" + searchSurname + "%'");
+
+
+//        sb.append(" AND p.date BETWEEN " + searchDateFrom + " AND "+);
+//        sb.append(" AND p.date BETWEEN '" + searchDateFrom + "' AND '2017-10-10'");
+//        sb.append(" AND p.date BETWEEN '20-01-1990' AND '27.10.2017'");
+
+
+
         if(!searchStreet.isEmpty()) {
             sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = '" + searchStreet + "')");
 //            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = (SELECT u.name FROM Street u WHERE u.name LIKE 'Kulman%'))");
@@ -133,7 +139,6 @@ public class PersonDao {
 
         Query query = entitymanager.createQuery(sb.toString());
         List<Object> personList = query.getResultList();
-
 
         entitymanager.close();
         emfactory.close();
@@ -155,9 +160,4 @@ public class PersonDao {
         entitymanager.getTransaction().commit();
         return list;
     }
-
-
 }
-
-
-

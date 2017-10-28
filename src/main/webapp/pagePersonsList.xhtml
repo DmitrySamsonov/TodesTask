@@ -12,121 +12,247 @@
 <h:head>
     <f:metadata charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"
                 http-equiv="X-UA-Conpatible"/>
-    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
     <title>JSF JPA Crud Example</title>
-    <style type="text/css">
-        .tableUpdated {
-            width: 70% !important;
-            margin: 17px 58px 0 !important;
-        }
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="styles/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
 
-        .btnSpace {
-            margin: 17px;
+    <!-- Include Bootstrap Datepicker -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+
+    <style type="text/css">
+        /**
+         * Override feedback icon position
+         * See http://formvalidation.io/examples/adjusting-feedback-icon-position/
+         */
+        #eventForm .form-control-feedback {
+            top: 0;
+            right: -15px;
         }
     </style>
+
+
 </h:head>
 <h:body>
-    <center><h2><p:outputLabel value="Persons List"/></h2></center>
-    <h:form id="personsForm">
-        <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="obj"
-                     style="width: 80%; position: center; text-align: center;"
-                     styleClass="employeeTable"
-                     headerClass="employeeTableHeader"
-                     rowClasses="employeeTableOddRow,employeeTableEvenRow">
-
-            <p:column>
-                <f:facet name="header">ID</f:facet>
-                #{personBean.getPersonObj(obj).id}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Name</f:facet>
-                #{personBean.getPersonObj(obj).name}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Surname</f:facet>
-                #{personBean.getPersonObj(obj).surname}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Patronymic</f:facet>
-                #{personBean.getPersonObj(obj).patronymic}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Sex</f:facet>
-                #{personBean.getPersonObj(obj).sex}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Date</f:facet>
-                <h:outputText value="#{personBean.getPersonObj(obj).date}" >
-                    <f:convertDateTime pattern="dd.MM.yyyy" />
-                </h:outputText>
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">House Number</f:facet>
-                #{addressBean.getAddressObj(obj).houseNumber}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">StreetCode</f:facet>
-                #{addressBean.getAddressObj(obj).streetCode}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Street</f:facet>
-                #{addressBean.getStreetNameByCode(obj)}
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Edit</f:facet>
-                <h:commandButton action="#{personBean.editPersonById(getPersonObj(obj))}" value="Edit"
-                                 styleClass="btn btn-primary"/>
-            </p:column>
-
-            <p:column>
-                <f:facet name="header">Delete</f:facet>
-                <h:commandButton action="#{personBean.deletePersonById()}" value="Delete"
-                                 styleClass="btn btn-danger">
-                    <f:param name="PersonId" value="#{personBean.getPersonObj(obj).id}"/>
-                </h:commandButton>
-            </p:column>
-
-        </p:dataTable>
-        <h:commandButton value="Add new person" action="pageAddPerson"></h:commandButton>
-    </h:form>
-
-
-    <h2><p:outputLabel value="Search"/></h2>
-    <h:form>
-        <div>
-            <p>Name</p>
-            <h:inputText id="searchName" value="#{personBean.searchName}"></h:inputText>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <label class="col-form-label">Navigation</label>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Search <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Add new person</a></li>
+                    <li><a href="#">Full list</a></li>
+                </ul>
+            </div>
         </div>
-        <div>
-            <p>Surname</p>
-            <h:inputText id="searchSurname" value="#{personBean.searchSurname}"></h:inputText>
-        </div>
-        <div>
-            <p>Street</p>
-            <h:selectOneMenu id="searchStreet" value="#{personBean.searchStreet}">
-                <f:selectItem itemLabel="---"/>
-                <f:selectItems value="#{streetBean.getNamesList()}" />
-            </h:selectOneMenu>
-        </div>
-        <div>
-            <p>House Number</p>
-            <h:inputText id="searchHouseNumber" value="#{personBean.searchHouseNumber}"></h:inputText>
+    </nav>
+
+
+    <h:form class="search-form">
+        <div class="form-row" align="center">
+            <div class="form-group col-md-2 col-md-offset-1">
+                <label class="col-form-label">Name</label>
+                <h:inputText class="form-control" id="searchName" value="#{personBean.searchName}"/>
+            </div>
+            <div class="form-group col-md-2">
+                <label class="col-form-label">Surname</label>
+                <h:inputText class="form-control" id="searchSurname" value="#{personBean.searchSurname}"/>
+            </div>
+            <!--<div id="searchDate" class="form-group col-md-2">-->
+                <!--<label class="col-sm-12 col-form-label">Birthday range</label>-->
+                <!--<div class="col-sm-6">-->
+                    <!--<h:inputText class="form-control" id="searchDateFrom" value="# {personBean.searchDateFrom}"/>-->
+                <!--</div>-->
+                <!--<div class="col-sm-6">-->
+                    <!--<h:inputText class="form-control" id="searchDateTo" value="# {personBean.searchDateTo}"/>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div id="searchDate" class="form-group col-md-2">
+                <label class="col-sm-12 col-form-label">Birthday range</label>
+                <div class="input-group input-append date" id="datePickerFrom">
+                    <!--<input type="text" class="form-control" name="date" />-->
+                    <h:inputText class="form-control" id="searchDateFrom" value="#{personBean.searchDateFrom}">
+                        <f:ajax event="change" execute="@this" render="personsForm cc"/>
+                    </h:inputText>
+
+                    <span id="span1" class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <div class="input-group input-append date" id="datePickerTo">
+                    <h:inputText class="form-control" id="searchDateTo" value="#{personBean.searchDateTo}">
+                        <f:ajax event="change" execute="@this" render="personsForm cc"/>
+                    </h:inputText>
+                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $('#datePickerFrom').datepicker();
+                    $('#datePickerTo')
+                        .datepicker({
+                            autoclose: true,
+                            format: 'mm/dd/yyyy'
+                        })
+                    /*.on('changeDate', function(e) {
+                        // Revalidate the date field
+                        $('#eventForm').formValidation('revalidateField', 'date');
+                    });
+
+                $('#eventForm').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        name: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The name is required'
+                                }
+                            }
+                        },
+                        date: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The date is required'
+                                },
+                                date: {
+                                    format: 'MM/DD/YYYY',
+                                    message: 'The date is not a valid'
+                                }
+                            }
+                        }
+                    }
+                })*/;
+                });
+            </script>
+
+
+            <div class="form-group col-md-2">
+                <label class="col-form-label">Street</label>
+                <h:selectOneMenu class="form-control" id="searchStreet" value="#{personBean.searchStreet}">
+                    <f:selectItem itemLabel="---"/>
+                    <f:selectItems value="#{streetBean.getNamesList()}"/>
+                </h:selectOneMenu>
+            </div>
+            <div class="form-group col-md-2">
+                <label class="col-form-label">House Number</label>
+                <h:inputText class="form-control" id="searchHouseNumber" value="#{personBean.searchHouseNumber}"/>
+            </div>
+
         </div>
 
-        <f:ajax event="keyup" execute="searchName searchSurname searchStreet searchHouseNumber" render="personsForm cc"/>
+        <f:ajax event="keyup"
+                execute="searchName searchSurname searchStreet searchHouseNumber"
+                render="personsForm cc"/>
         <f:ajax event="click" execute="searchStreet" render="personsForm cc"/>
+
     </h:form>
 
     <h:outputText id="cc" value="#{personBean.method()}"/>
+
+    <h:form id="personsForm">
+        <div style="margin-top: 10%; margin-left: 3%;margin-right: 3%">
+            <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="obj">
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">ID</f:facet>
+                    </div>
+                    #{personBean.getPersonObj(obj).id}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Name</f:facet>
+                    </div>
+                    #{personBean.getPersonObj(obj).name}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Surname</f:facet>
+                    </div>
+                    #{personBean.getPersonObj(obj).surname}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Patronymic</f:facet>
+                    </div>
+                    #{personBean.getPersonObj(obj).patronymic}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Sex</f:facet>
+                    </div>
+                    #{personBean.getPersonObj(obj).sex}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Date</f:facet>
+                    </div>
+                    <h:outputText value="#{personBean.getPersonObj(obj).date}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">House Number</f:facet>
+                    </div>
+                    #{addressBean.getAddressObj(obj).houseNumber}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">StreetCode</f:facet>
+                    </div>
+                    #{addressBean.getAddressObj(obj).streetCode}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Street</f:facet>
+                    </div>
+                    #{addressBean.getStreetNameByCode(obj)}
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Edit</f:facet>
+                    </div>
+                    <h:commandButton action="#{personBean.editPersonById(getPersonObj(obj))}" value="Edit"
+                                     styleClass="btn btn-primary"/>
+                </p:column>
+
+                <p:column>
+                    <div class="thead-dark">
+                        <f:facet name="header">Delete</f:facet>
+                    </div>
+                    <h:commandButton action="#{personBean.deletePersonById()}" value="Delete"
+                                     styleClass="btn btn-danger">
+                        <f:param name="PersonId" value="#{personBean.getPersonObj(obj).id}"/>
+                    </h:commandButton>
+                </p:column>
+            </p:dataTable>
+        </div>
+
+        <h:commandButton value="Add new person" action="pageAddPerson"></h:commandButton>
+    </h:form>
 
 
 </h:body>

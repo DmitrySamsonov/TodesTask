@@ -7,8 +7,7 @@ import model.Person;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import java.util.Date;
-import java.util.Iterator;
+import java.sql.Date;
 import java.util.List;
 
 @ManagedBean
@@ -22,6 +21,8 @@ public class PersonBean {
     private int editPersonId;
     private String searchName = "";
     private String searchSurname = "";
+    private String searchDateFrom ="";
+    private String searchDateTo ="";
     private String searchStreet = "";
     private String searchHouseNumber = "";
 
@@ -32,27 +33,57 @@ public class PersonBean {
         if (searchStreet == null) {
             searchStreet = "";
         }
-        if (searchName.isEmpty() && searchSurname.isEmpty() && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+
+        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
+                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+
 //        if (searchName.isEmpty() && searchSurname.isEmpty() && searchHouseNumber.isEmpty()) {
             return PersonDao.selectAll();
-        } else {
+        }
+        else {
 
 
-//            return PersonDao.search(searchName, searchSurname, "", searchHouseNumber);
-            return PersonDao.search(searchName, searchSurname, searchStreet, searchHouseNumber);
+         return PersonDao.search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
         }
     }
 
     public String method() {
-
-        if (searchStreet == null) {
-            return "s == null";
+        String s="";
+        if (searchName == null) {
+            s = "searchName == null";
         } else {
-            return "s != null  s= " + searchStreet;
+            s = "searchName != null  searchName= " + searchName;
         }
+
+        if (searchDateFrom == null) {
+            s += "   +++   searchDateFrom == null";
+        } else {
+            s += "    +++      searchDateFrom != null  searchDateFrom= " + searchDateFrom;
+        }
+        if (searchDateTo == null) {
+            s += "  +++   searchDateTo == null";
+        } else {
+            s += "   +++  searchDateTo != null  searchDateTo= " + searchDateTo;
+        }
+        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
+                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+
+            s += "    if = 1 (selectAll)";
+        } else {
+            s += "    if = 2 (search)";
+        }
+
+//        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
+//                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
+//            s = "ifffffffffffffffff    1";
+//        }
+//        else {
+//            s = "iffffffffffffffffff    2";
+//        }
+        return s;
     }
 
-    public Person getPersonObj(Object item){
+    public Person getPersonObj(Object item) {
         Object[] row = (Object[]) item;
         Person personObj = (Person) row[0];
 //        Address addressOb = (Address) row[1];
@@ -83,7 +114,7 @@ public class PersonBean {
     }
 
     public String savePersonEdit() {
-        //TODO: гогвно какое-то. надо попробовать переделать! Попробуй создать вверху поле Person
+        //TODO: говно какое-то. надо попробовать переделать! Попробуй создать вверху поле Person
         Person person = new Person();
         person.setId(editPersonId);
         person.setName(name);
@@ -164,6 +195,22 @@ public class PersonBean {
 
     public void setSearchSurname(String searchSurname) {
         this.searchSurname = searchSurname;
+    }
+
+    public String getSearchDateFrom() {
+        return searchDateFrom;
+    }
+
+    public void setSearchDateFrom(String searchDateFrom) {
+        this.searchDateFrom = searchDateFrom;
+    }
+
+    public String getSearchDateTo() {
+        return searchDateTo;
+    }
+
+    public void setSearchDateTo(String searchDateTo) {
+        this.searchDateTo = searchDateTo;
     }
 
     public String getSearchStreet() {

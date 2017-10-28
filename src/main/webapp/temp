@@ -1,0 +1,71 @@
+<h:form id="personsForm">
+        <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="obj"
+                     style="width: 80%; position: center; text-align: center;"
+                     styleClass="employeeTable"
+                     headerClass="employeeTableHeader"
+                     rowClasses="employeeTableOddRow,employeeTableEvenRow">
+
+            <p:column>
+                <f:facet name="header">ID</f:facet>
+                #{personBean.getPersonObj(obj).id}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Name</f:facet>
+                #{personBean.getPersonObj(obj).name}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Surname</f:facet>
+                #{personBean.getPersonObj(obj).surname}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Patronymic</f:facet>
+                #{personBean.getPersonObj(obj).patronymic}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Sex</f:facet>
+                #{personBean.getPersonObj(obj).sex}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Date</f:facet>
+                <h:outputText value="#{personBean.getPersonObj(obj).date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">House Number</f:facet>
+                #{addressBean.getAddressObj(obj).houseNumber}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">StreetCode</f:facet>
+                #{addressBean.getAddressObj(obj).streetCode}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Street</f:facet>
+                #{addressBean.getStreetNameByCode(obj)}
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Edit</f:facet>
+                <h:commandButton action="#{personBean.editPersonById(getPersonObj(obj))}" value="Edit"
+                                 styleClass="btn btn-primary"/>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Delete</f:facet>
+                <h:commandButton action="#{personBean.deletePersonById()}" value="Delete"
+                                 styleClass="btn btn-danger">
+                    <f:param name="PersonId" value="#{personBean.getPersonObj(obj).id}"/>
+                </h:commandButton>
+            </p:column>
+
+        </p:dataTable>
+        <h:commandButton value="Add new person" action="pageAddPerson"></h:commandButton>
+    </h:form>
