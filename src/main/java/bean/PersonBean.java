@@ -9,11 +9,11 @@ import org.apache.logging.log4j.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-import java.sql.Date;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
-
-
 
 @ManagedBean
 public class PersonBean {
@@ -22,7 +22,7 @@ public class PersonBean {
     private String surname;
     private String patronymic;
     private Person.Sex sex;
-    private Date date;
+    private String date;
     private int editPersonId;
     private String searchName = "";
     private String searchSurname = "";
@@ -34,16 +34,10 @@ public class PersonBean {
     @ManagedProperty(value = "#{addressBean}")
     private AddressBean addressBean;
 
-    private static final Logger logger = LogManager.getLogger("HelloWorld");
+    private static final Logger logger = LogManager.getLogger(PersonBean.class);
 
     public List<Object> getPersonsList() {
-
-        logger.info("Hello, world!");
-        logger.error("test error");
-
         try{
-
-
             if (searchStreet == null) {
                 searchStreet = "";
             }
@@ -51,12 +45,9 @@ public class PersonBean {
             if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
                     && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
 
-//        if (searchName.isEmpty() && searchSurname.isEmpty() && searchHouseNumber.isEmpty()) {
                 return PersonDao.selectAll();
             }
             else {
-
-
                 return PersonDao.search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
             }
 
@@ -64,29 +55,16 @@ public class PersonBean {
             logger.error("Exception in getPersonsList() " + e);
             return new LinkedList<Object>();
         }
-
     }
 
     public String method() {
         String s="";
         try{
 
-            if (searchName == null) {
-                s = "searchName == null";
-            } else {
-                s = "searchName != null  searchName= " + searchName;
+            if(searchDateFrom!=null){
+                s= "searchDateFrom = " + searchDateFrom;
             }
 
-            if (searchDateFrom == null) {
-                s += "   +++   searchDateFrom == null";
-            } else {
-                s += "    +++      searchDateFrom != null  searchDateFrom= " + searchDateFrom;
-            }
-            if (searchDateTo == null) {
-                s += "  +++   searchDateTo == null";
-            } else {
-                s += "   +++  searchDateTo != null  searchDateTo= " + searchDateTo;
-            }
             if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
                     && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
 
@@ -95,15 +73,8 @@ public class PersonBean {
                 s += "    if = 2 (search)";
             }
 
-//        if (searchName.isEmpty() && searchSurname.isEmpty() && searchDateFrom.isEmpty() && searchDateTo.isEmpty()
-//                && searchStreet.isEmpty() && searchHouseNumber.isEmpty()) {
-//            s = "ifffffffffffffffff    1";
-//        }
-//        else {
-//            s = "iffffffffffffffffff    2";
-//        }
         }catch (Exception e){
-            logger.error("Exception in method() "+e);
+            logger.error("Exception in method() "+e + s);
         }
 
         return s;
@@ -112,7 +83,6 @@ public class PersonBean {
     public Person getPersonObj(Object item) {
         Object[] row = (Object[]) item;
         Person personObj = (Person) row[0];
-//        Address addressOb = (Address) row[1];
         return personObj;
     }
 
@@ -122,13 +92,24 @@ public class PersonBean {
         person.setSurname(surname);
         person.setPatronymic(patronymic);
         person.setSex(sex);
-        person.setDate(date);
+        person.setDate(parseDate(date));
 
         Address address = new Address();
         addressBean.calculateStreetCode();
         address.setStreetCode(addressBean.getStreetCode());
         address.setHouseNumber(addressBean.getHouseNumber());
         return PersonDao.createPerson(person, address);
+    }
+
+    private Date parseDate(String date){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        Date result = null;
+        try{
+            result = dateFormat.parse(date);
+        } catch (Exception e) {
+            logger.error(e.getStackTrace());
+        }
+        return result;
     }
 
     public String editPersonById(Person person) {
@@ -153,6 +134,11 @@ public class PersonBean {
         int personId = Integer.valueOf(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("PersonId"));
         return PersonDao.deletePerson(personId);
     }
+
+//    public String getFormatDate(){
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//        String res =
+//    }
 
 
     public String getName() {
@@ -191,11 +177,11 @@ public class PersonBean {
         return Person.Sex.values();
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

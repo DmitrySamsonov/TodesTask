@@ -9,5 +9,10 @@ form label {
 }
 
 .search-form {
-    /*margin-top: 3%;*/
+    margin-top: 7%;
+}
+
+.padding-0{
+    padding-right:0;
+    padding-left:0;
 }
