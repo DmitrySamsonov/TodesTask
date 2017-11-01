@@ -3,14 +3,19 @@ package dao;
 import model.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.persistence.internal.helper.ConversionManager;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class PersonDao {
+    public static final Class SQLDate = java.sql.Date.class;
     private static final Logger logger = LogManager.getLogger(PersonDao.class);
 
     private static final String PERSISTENCE_UNIT_NAME = "JpaUnit";
@@ -84,6 +89,21 @@ public class PersonDao {
         return personList;
     }
 
+
+    //TODO for test debug...
+    public static void main(String[] args) {
+        String searchName = "t";
+        String searchSurname = "";
+        String searchDateFrom = "";
+        String searchDateTo = "";
+        String searchStreet = "";
+        String searchHouseNumber = "";
+        List<Object> list = search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
+
+        System.out.println();
+    }
+
+
     public static List<Object> search(String searchName, String searchSurname, String searchDateFrom,
                                       String searchDateTo, String searchStreet, String searchHouseNumber) {
 
@@ -94,35 +114,51 @@ public class PersonDao {
         sb.append(" p.name LIKE '" + searchName + "%'");
         sb.append(" AND p.surname LIKE '" + searchSurname + "%'");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        Date dateFrom = null;
-        try {
-            dateFrom = dateFormat.parse("00.00.0000");
-        } catch (ParseException e) {
-            logger.error("Fail parse 00.00.0000");
-        }
-        Date dateTo = new Date();
-        if (!searchDateFrom.isEmpty()) {
-            try {
-                dateFrom = dateFormat.parse(searchDateFrom);
-            } catch (ParseException e) {
-                logger.error("Fail parse searchDateFrom");
-            }
-        }
-        if (!searchDateTo.isEmpty()) {
-            try {
-                dateTo = dateFormat.parse(searchDateTo);
-            } catch (ParseException e) {
-                logger.error("Fail parse searchDateTo");
-            }
-        }
-        logger.info("Date dateFrom = " + dateFrom.toString());
-        logger.info("Date dateTo = " + dateTo.toString());
+        if (!searchDateFrom.isEmpty() || !searchDateTo.isEmpty()) {
 
-        sb.append(" AND p.date BETWEEN :start AND :end");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            Date dateFrom = null;
+            try {
+                dateFrom = dateFormat.parse("00.00.0000");
+            } catch (ParseException e) {
+                logger.error("Fail parse 00.00.0000");
+            }
+            Date dateTo = new Date();
+            if (!searchDateFrom.isEmpty()) {
+                try {
+                    dateFrom = dateFormat.parse(searchDateFrom);
+                } catch (ParseException e) {
+                    logger.error("Fail parse searchDateFrom");
+                }
+            }
+            if (!searchDateTo.isEmpty()) {
+                try {
+                    dateTo = dateFormat.parse(searchDateTo);
+                } catch (ParseException e) {
+                    logger.error("Fail parse searchDateTo");
+                }
+            }
+            logger.info("Date dateFrom = " + dateFrom.toString());
+            logger.info("Date dateTo = " + dateTo.toString());
 
+            Object start = null;
+            Object end = null;
+            try {
+                ConversionManager conversionManager = new ConversionManager();
+                start = conversionManager.convertObject(dateFrom, SQLDate);
+                end = conversionManager.convertObject(dateTo, SQLDate);
+            } catch (Exception e) {
+                logger.error("Exception when convert Date to Time. " + e);
+            }
+            sb.append(" AND p.date BETWEEN '" + start + "' AND '" + end + "'");
+//            sb.append(" AND p.date BETWEEN :start AND :end");
+        }
+
+//        if (!searchStreet.isEmpty()) {
+//            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = '" + searchStreet + "')");
+//        }
         if (!searchStreet.isEmpty()) {
-            sb.append(" AND a.streetCode = (SELECT s.code FROM Street s WHERE s.name = '" + searchStreet + "')");
+            sb.append(" AND a.street.name = '" + searchStreet + "'");
         }
 
         if (!searchHouseNumber.isEmpty()) {
@@ -135,8 +171,10 @@ public class PersonDao {
         List<Object> personList = null;
         try {
             Query query = entityManagerObj.createQuery(sb.toString());
-            query.setParameter("start", dateFrom, TemporalType.DATE);
-            query.setParameter("end", dateTo, TemporalType.DATE);
+//            query.setParameter("start", dateFrom, TemporalType.DATE);
+//            query.setParameter("end", dateTo, TemporalType.DATE);
+//            query.setParameter("start", start);
+//            query.setParameter("end", end);
             personList = query.getResultList();
         } catch (Exception e) {
             logger.error("Exception in search() execute Query. " + e.getStackTrace());
@@ -145,4 +183,6 @@ public class PersonDao {
         entityManagerObj.close();
         return personList;
     }
+
+
 }

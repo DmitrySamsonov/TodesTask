@@ -75,6 +75,19 @@ public class PersonBean {
         return (Person) row[0];
     }
 
+    public String extractPersonObjDate(Object item) {
+        Object[] row = (Object[]) item;
+        Person person = (Person) row[0];
+        Date date = person.getDate();
+        if( date == null){
+            return "";
+        }else {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            String dateString = dateFormat.format(date);
+            return dateString;
+        }
+    }
+
 
     //TODO for test debug...
 //    public static void main(String[] args) {

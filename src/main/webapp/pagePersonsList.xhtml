@@ -129,12 +129,12 @@
         <div class="col-md-10 col-md-offset-1" style="margin-top: 5%">
             <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="obj">
 
-                <p:column>
-                    <div class="thead-dark">
-                        <f:facet name="header">ID</f:facet>
-                    </div>
-                    #{personBean.extractPersonObj(obj).id}
-                </p:column>
+                <!--<p:column>-->
+                    <!--<div class="thead-dark">-->
+                        <!--<f:facet name="header">ID</f:facet>-->
+                    <!--</div>-->
+                    <!--# {personBean.extractPersonObj(obj).id}-->
+                <!--</p:column>-->
 
                 <p:column>
                     <div class="thead-dark">
@@ -168,9 +168,10 @@
                     <div class="thead-dark">
                         <f:facet name="header">Date</f:facet>
                     </div>
-                    <h:outputText value="#{personBean.extractPersonObj(obj).getDate()}">
-                        <f:convertDateTime pattern="dd.MM.yyyy"/>
-                    </h:outputText>
+                    <!--<h:outputText value="#{personBean.extractPersonObj(obj).getDate()}">-->
+                        <!--<f:convertDateTime pattern="dd.MM.yyyy"/>-->
+                    <!--</h:outputText>-->
+                    <h:outputText value="#{personBean.extractPersonObjDate(obj)}"/>
                 </p:column>
 
                 <p:column>
@@ -180,18 +181,19 @@
                     #{addressBean.extractAddressObj(obj).houseNumber}
                 </p:column>
 
-                <p:column>
-                    <div class="thead-dark">
-                        <f:facet name="header">StreetCode</f:facet>
-                    </div>
-                    #{addressBean.extractAddressObj(obj).code}
-                </p:column>
+                <!--<p:column>-->
+                    <!--<div class="thead-dark">-->
+                        <!--<f:facet name="header">StreetCode</f:facet>-->
+                    <!--</div>-->
+                    <!--# {addressBean.extractAddressObj(obj).code}-->
+                <!--</p:column>-->
 
                 <p:column>
                     <div class="thead-dark">
                         <f:facet name="header">Street</f:facet>
                     </div>
-                    #{addressBean.getStreetNameByCode(obj)}
+                    <!--# {addressBean.getStreetNameByCode(obj)}-->
+                    #{addressBean.extractAddressObj(obj).street.name}
                 </p:column>
 
                 <p:column>

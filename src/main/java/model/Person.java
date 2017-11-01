@@ -68,8 +68,13 @@ public class Person {
         this.sex = sex;
     }
 
+//    public Date getDate() {
+//        return new Date(date.getTime() + 10);
+//    }
+
+
     public Date getDate() {
-        return new Date(date.getTime() + 10);
+        return date;
     }
 
     public void setDate(Date date) {

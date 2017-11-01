@@ -13,7 +13,8 @@
         <class>model.Address</class>
         <class>model.Street</class>
 
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <!--TODO maybe need delete-->
+        <!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
