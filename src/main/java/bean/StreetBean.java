@@ -2,21 +2,28 @@ package bean;
 
 import dao.StreetDao;
 import model.Street;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import java.util.List;
 
 @ManagedBean(eager = true)
-@ApplicationScoped
 public class StreetBean {
 
     private int code;
     private String name;
 
+    private static final Logger logger = LogManager.getLogger(PersonBean.class);
+
+    // Checked!
     {
         FillStreetsAtStart();
     }
+
+//    public static void main(String[] args) {
+//        new StreetBean().FillStreetsAtStart();
+//    }
 
     public void FillStreetsAtStart() {
         if (isEmptyDataInStreets()) {
@@ -29,21 +36,31 @@ public class StreetBean {
     }
 
 
+    // Checked!
     public List<String> getNamesList() {
-        return StreetDao.selectAllNames();
+        return StreetDao.selectStreetNames();
     }
 
-    public List<Street> getStreetsList() {
-        return StreetDao.selectAll();
+    // Checked!
+    public Street getStreet() {
+        Street street = StreetDao.getStreetByName(name);
+        return street;
     }
 
-    public void calculateCode() {
-        code = StreetDao.getCodeByName(name);
-    }
 
-    public String getStreetNameByCode(int code) {
-        return StreetDao.getNameByCode(code);
-    }
+//    public void calculateCodeByName() {
+//        try {
+//            code = StreetDao.getCodeByName(name);
+//        } catch (Exception e) {
+//            logger.error("Exception in StreetBean.calculateCodeByName(). e= " + e);
+//            logger.info("name = " + getName()+"[in StreetBean.calculateCodeByName()]");
+//            logger.info("code = " + getCode()+"[in StreetBean.calculateCodeByName()]");
+//        }
+//    }
+//
+//    public String getStreetNameByCode(int code) {
+//        return StreetDao.getNameByCode(code);
+//    }
 
 
     public int getCode() {

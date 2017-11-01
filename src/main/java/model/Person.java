@@ -3,6 +3,8 @@ package model;
 import javax.persistence.*;
 import java.util.Date;
 
+import static javax.persistence.TemporalType.DATE;
+
 @Entity
 @Table(name = "person")
 public class Person {
@@ -19,6 +21,8 @@ public class Person {
     }
 
     private Sex sex;
+
+    @Temporal(DATE)
     private Date date;
 
     @ManyToOne(targetEntity = Address.class)

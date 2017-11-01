@@ -1,6 +1,10 @@
 body {
-    background-image: url("../images/night_city.jpg");
-    height: 100%;
+    /*background-image: url("../images/night_city.jpg");*/
+    background-image: url("../images/chicago.jpg");
+    /*background-image: url("../images/new_york2.jpg");*/
+    /*height: 100%;*/
+    height: auto;
+    width: auto;
 }
 
 form label {

@@ -1,6 +1,5 @@
 package dao;
 
-import model.Address;
 import model.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,28 +14,36 @@ public class PersonDao {
     private static final Logger logger = LogManager.getLogger(PersonDao.class);
 
     private static final String PERSISTENCE_UNIT_NAME = "JpaUnit";
-    private static EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
-    private static EntityTransaction transactionObj = entityManagerObj.getTransaction();
+//    private static EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+//    private static EntityManager entityManagerObj = null; /*EntityManagerFactoryWeb.getEntityManager();*/
+//    private static EntityTransaction transactionObj = entityManagerObj.getTransaction();
 
 
-    public static String createPerson(Person person, Address address) {
+    // Checked!
+    public static void createPerson(Person person) {
+        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityTransaction transactionObj = entityManagerObj.getTransaction();
+
         if (!transactionObj.isActive()) {
             transactionObj.begin();
         }
+        try {
+            entityManagerObj.persist(person);
+            transactionObj.commit();
 
-        //Store Address
-        entityManagerObj.persist(address);
+        } catch (Exception e) {
+            logger.error("Exception in PersonDao.createPerson(person). " + e);
+            throw e;
+        }
 
-        //Store Person
-        person.setAddress(address);
-        entityManagerObj.persist(person);
-
-        transactionObj.commit();
-        return "pagePersonsList.xhtml?faces-redirect=true";
+        entityManagerObj.close();
     }
 
     public static String deletePerson(int personId) {
-        if(!transactionObj.isActive()) {
+        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityTransaction transactionObj = entityManagerObj.getTransaction();
+
+        if (!transactionObj.isActive()) {
             transactionObj.begin();
         }
 
@@ -46,11 +53,15 @@ public class PersonDao {
         }
 
         transactionObj.commit();
+        entityManagerObj.close();
         return "pagePersonsList.xhtml?faces-redirect=true";
     }
 
     public static String editPerson(Person person) {
-        if(!transactionObj.isActive()) {
+        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityTransaction transactionObj = entityManagerObj.getTransaction();
+
+        if (!transactionObj.isActive()) {
             transactionObj.begin();
         }
 
@@ -60,16 +71,23 @@ public class PersonDao {
         personManager.setPatronymic(person.getPatronymic());
 
         transactionObj.commit();
+        entityManagerObj.close();
         return "pagePersonsList.xhtml?faces-redirect=true";
     }
 
     public static List<Object> selectAll() {
+        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+
         List<Object> personList = entityManagerObj.createQuery("SELECT p, a  FROM Person p LEFT JOIN p.address a").getResultList();
+
+        entityManagerObj.close();
         return personList;
     }
 
     public static List<Object> search(String searchName, String searchSurname, String searchDateFrom,
                                       String searchDateTo, String searchStreet, String searchHouseNumber) {
+
+        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
 
         StringBuilder sb = new StringBuilder();
         sb.append("SELECT p, a  FROM Person p LEFT JOIN p.address a WHERE ");
@@ -124,6 +142,7 @@ public class PersonDao {
             logger.error("Exception in search() execute Query. " + e.getStackTrace());
         }
 
+        entityManagerObj.close();
         return personList;
     }
 }

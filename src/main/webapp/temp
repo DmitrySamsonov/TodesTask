@@ -7,44 +7,44 @@
 
             <p:column>
                 <f:facet name="header">ID</f:facet>
-                #{personBean.getPersonObj(obj).id}
+                #{personBean.extractPersonObj(obj).id}
             </p:column>
 
             <p:column>
                 <f:facet name="header">Name</f:facet>
-                #{personBean.getPersonObj(obj).name}
+                #{personBean.extractPersonObj(obj).name}
             </p:column>
 
             <p:column>
                 <f:facet name="header">Surname</f:facet>
-                #{personBean.getPersonObj(obj).surname}
+                #{personBean.extractPersonObj(obj).surname}
             </p:column>
 
             <p:column>
                 <f:facet name="header">Patronymic</f:facet>
-                #{personBean.getPersonObj(obj).patronymic}
+                #{personBean.extractPersonObj(obj).patronymic}
             </p:column>
 
             <p:column>
                 <f:facet name="header">Sex</f:facet>
-                #{personBean.getPersonObj(obj).sex}
+                #{personBean.extractPersonObj(obj).sex}
             </p:column>
 
             <p:column>
                 <f:facet name="header">Date</f:facet>
-                <h:outputText value="#{personBean.getPersonObj(obj).date}">
+                <h:outputText value="#{personBean.extractPersonObj(obj).date}">
                     <f:convertDateTime pattern="dd.MM.yyyy"/>
                 </h:outputText>
             </p:column>
 
             <p:column>
                 <f:facet name="header">House Number</f:facet>
-                #{addressBean.getAddressObj(obj).houseNumber}
+                #{addressBean.extractAddressObj(obj).houseNumber}
             </p:column>
 
             <p:column>
                 <f:facet name="header">StreetCode</f:facet>
-                #{addressBean.getAddressObj(obj).streetCode}
+                #{addressBean.extractAddressObj(obj).code}
             </p:column>
 
             <p:column>
@@ -54,7 +54,7 @@
 
             <p:column>
                 <f:facet name="header">Edit</f:facet>
-                <h:commandButton action="#{personBean.editPersonById(getPersonObj(obj))}" value="Edit"
+                <h:commandButton action="#{personBean.editPersonById(extractPersonObj(obj))}" value="Edit"
                                  styleClass="btn btn-primary"/>
             </p:column>
 
@@ -62,7 +62,7 @@
                 <f:facet name="header">Delete</f:facet>
                 <h:commandButton action="#{personBean.deletePersonById()}" value="Delete"
                                  styleClass="btn btn-danger">
-                    <f:param name="PersonId" value="#{personBean.getPersonObj(obj).id}"/>
+                    <f:param name="PersonId" value="#{personBean.extractPersonObj(obj).id}"/>
                 </h:commandButton>
             </p:column>
 

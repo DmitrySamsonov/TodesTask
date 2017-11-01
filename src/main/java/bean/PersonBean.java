@@ -1,6 +1,8 @@
 package bean;
 
+import dao.AddressDao;
 import dao.PersonDao;
+import dao.StreetDao;
 import model.Address;
 import model.Person;
 import org.apache.logging.log4j.LogManager;
@@ -35,16 +37,21 @@ public class PersonBean {
 
     private static final Logger logger = LogManager.getLogger(PersonBean.class);
 
+//    //TODO for test debug...
+//    //TODO for test debug...
+//    public PersonDao personDao = new PersonDao();
+//    public StreetDao streetDao = new StreetDao();
+
     public List<Object> getPersonsList() {
         try {
             if (searchStreet == null) {
                 searchStreet = "";
             }
 
-            if (searchCheck()) {
-                return PersonDao.search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
-            } else {
+            if (searchIsEmpty()) {
                 return PersonDao.selectAll();
+            } else {
+                return PersonDao.search(searchName, searchSurname, searchDateFrom, searchDateTo, searchStreet, searchHouseNumber);
             }
 
         } catch (Exception e) {
@@ -53,28 +60,47 @@ public class PersonBean {
         }
     }
 
-    private boolean searchCheck() {
-        boolean result;
-        if (searchName.isEmpty()
+    private boolean searchIsEmpty() {
+        return (searchName.isEmpty()
                 && searchSurname.isEmpty()
                 && searchDateFrom.isEmpty()
                 && searchDateTo.isEmpty()
                 && searchStreet.isEmpty()
-                && searchHouseNumber.isEmpty()) {
-            result = false;
-        } else{
-            result = true;
-        }
-        return result;
+                && searchHouseNumber.isEmpty());
     }
 
-    public Person getPersonObj(Object item) {
+    // Checked!
+    public Person extractPersonObj(Object item) {
         Object[] row = (Object[]) item;
-        Person personObj = (Person) row[0];
-        return personObj;
+        return (Person) row[0];
     }
 
+
+    //TODO for test debug...
+//    public static void main(String[] args) {
+//        PersonBean personBean = new PersonBean();
+//        personBean.setName("a");
+//        personBean.setSurname("d");
+//        personBean.setPatronymic("f");
+//        personBean.setDate("23.05.1995");
+//
+//
+//        personBean.addNewPerson();
+//    }
+
+    // Checked!
     public String addNewPerson() {
+        logger.info("------------addNewPerson-----------");
+        try {
+            PersonDao.createPerson(getPerson());
+        } catch (Exception e) {
+            logger.error("Exception in addNewPerson(). " + e);
+        }
+        return "pagePersonsList.xhtml?faces-redirect=true";
+    }
+
+    // Checked!
+    private Person getPerson() {
         Person person = new Person();
         person.setName(name);
         person.setSurname(surname);
@@ -82,20 +108,25 @@ public class PersonBean {
         person.setSex(sex);
         person.setDate(parseDate(date));
 
-        Address address = new Address();
-        addressBean.calculateStreetCode();
-        address.setStreetCode(addressBean.getStreetCode());
-        address.setHouseNumber(addressBean.getHouseNumber());
-        return PersonDao.createPerson(person, address);
+
+        //TODO for test debug...
+//        AddressBean addressBean = new AddressBean();
+//        addressBean.setHouseNumber(88);
+
+
+
+        person.setAddress(addressBean.getAddress());
+        return person;
     }
 
+    // Checked!
     private Date parseDate(String date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date result = null;
         try {
             result = dateFormat.parse(date);
         } catch (Exception e) {
-            logger.error(e.getStackTrace());
+            logger.error(e);
         }
         return result;
     }
