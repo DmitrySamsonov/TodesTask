@@ -5,6 +5,8 @@ $(document).ready(function () {
             format: 'dd.mm.yyyy'
         });
 
-    $('#addNewPersonFormId\\:houseNumber').val("");
+    if($('#addNewPersonFormId\\:houseNumber').val() == 0){
+        $('#addNewPersonFormId\\:houseNumber').val("");
+    }
 
 });
