@@ -36,24 +36,11 @@ public class EntityManagerFactoryWeb implements ServletContextListener {
         logger.info("### ServletContextListener : contextDestroyed - Closed EntityManagerFactoryWeb done for PersistanceUnit " + PERSISTENCE_UNIT_NAME);
     }
 
-//    public static EntityManager getEntityManager() {
-//        return entityManager;
-//    }
 
     public static synchronized EntityManager getEntityManager() {
-//        if (entityManager == null) {
-//            entityManager = new EntityManager();
-//        }
         return entityManager;
     }
 
-//    public static EntityManager createEntityManager() {
-//        if (entityManagerFactory == null) {
-//            logger.error("[ emf == null ]. Exception in EntityManagerFactoryWeb.createEntityManager()");
-//            throw new IllegalStateException("Context is not initialized yet.");
-//        }
-//        return entityManagerFactory.createEntityManager();
-//    }
 }
 
 

@@ -31,7 +31,6 @@ public class StreetDao {
         DatabaseDao.getInstance().create(street);
     }
 
-    // Checked!
     public List<Street> selectAll() {
 
         String jpql = "SELECT s FROM Street s";
@@ -40,7 +39,6 @@ public class StreetDao {
         return streetList;
     }
 
-    // Checked!
     public List<String> selectStreetNames() {
 
         String jpql = "Select s.name from Street s";
@@ -49,7 +47,6 @@ public class StreetDao {
         return namesList;
     }
 
-    // Checked!
     public Street getStreetByName(String name) {
 
         Street street = null;
@@ -62,37 +59,5 @@ public class StreetDao {
         return street;
     }
 
-
-//    public static int getCodeByName(String streetName) {
-//        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
-//
-//
-//        int code = -1;
-//        try {
-//
-//            Query query = entityManagerObj.createQuery("SELECT s.code FROM Street s WHERE s.name = '" + streetName + "'");
-//            code = Integer.valueOf(query.getSingleResult().toString());
-//        } catch (Exception e) {
-//            LOGGER.error("Exception in StreetDao.getCodeByName(name). " + e);
-//        }
-//
-//        LOGGER.info("code= " + code + "[in StreetDao.getCodeByName(name)]");
-//        entityManagerObj.close();
-//
-//        return code;
-//    }
-//
-//    public static String getNameByCode(int streetCode) {
-//        EntityManager entityManagerObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
-//
-//        Query query = entityManagerObj.createQuery("SELECT s.name FROM Street s WHERE s.code = '" + streetCode + "'");
-//        String name = query.getSingleResult().toString();
-//
-//        entityManagerObj.close();
-//
-//
-//        return name;
-//    }
-//
 
 }

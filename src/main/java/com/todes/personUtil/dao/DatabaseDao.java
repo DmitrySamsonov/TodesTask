@@ -38,21 +38,6 @@ public class DatabaseDao {
         }
     }
 
-    public synchronized void delete(Object entity) {
-        EntityManager entityManagerObj = EntityManagerFactoryWeb.getEntityManager();
-        EntityTransaction transactionObj = entityManagerObj.getTransaction();
-        if (!transactionObj.isActive()) {
-            transactionObj.begin();
-        }
-        try {
-            entityManagerObj.remove(entity);
-            transactionObj.commit();
-        } catch (Exception e) {
-            LOGGER.error("Exception in DatabaseDao.delete(). " + e);
-            throw e;
-        }
-    }
-
     public synchronized Object selectSingleResult(String jpql) {
         EntityManager entityManagerObj = EntityManagerFactoryWeb.getEntityManager();
 
@@ -71,7 +56,7 @@ public class DatabaseDao {
     public synchronized List selectResultList(String jpql) {
         EntityManager entityManagerObj = EntityManagerFactoryWeb.getEntityManager();
 
-        List resultList= null;
+        List resultList = null;
         try {
             Query query = entityManagerObj.createQuery(jpql);
             resultList = query.getResultList();

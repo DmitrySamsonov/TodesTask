@@ -5,8 +5,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.persistence.internal.helper.ConversionManager;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +14,6 @@ public class PersonDao {
     private static final Class SQL_DATE = java.sql.Date.class;
     private static final Logger LOGGER = LogManager.getLogger(PersonDao.class);
 
-    // Checked!
     public void createPerson(Person person) {
         try {
             DatabaseDao.getInstance().create(person);
@@ -26,17 +23,6 @@ public class PersonDao {
         }
     }
 
-    public String deletePerson(int personId) {
-        EntityManager entityManagerObj = EntityManagerFactoryWeb.getEntityManager();
-
-        Person person = entityManagerObj.find(Person.class, personId);
-        if (person != null) {
-            DatabaseDao.getInstance().delete(person);
-        }
-
-        entityManagerObj.close();
-        return "pagePersonsList.xhtml?faces-redirect=true";
-    }
 
     public List<Object> selectAll() {
         String jpql = "SELECT p, a  FROM Person p LEFT JOIN p.address a";
@@ -45,7 +31,7 @@ public class PersonDao {
     }
 
     public List<Object> search(String searchName, String searchSurname, String searchDateFrom,
-                                      String searchDateTo, String searchStreet, String searchHouseNumber) {
+                               String searchDateTo, String searchStreet, String searchHouseNumber) {
 
         StringBuilder jpql = new StringBuilder();
         jpql.append("SELECT p, a  FROM Person p LEFT JOIN p.address a WHERE ");

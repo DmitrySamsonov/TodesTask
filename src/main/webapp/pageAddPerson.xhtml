@@ -132,12 +132,7 @@
                                     <h:message for="street" style="color:red"/>
                                 </div>
                             </div>
-                            <!--<div>-->
-                            <!--<p>Street</p>-->
-                            <!--<h:selectOneMenu value="# {streetBean.name}">-->
-                            <!--<f:selectItems value="# {streetBean.getNamesList()}"/>-->
-                            <!--</h:selectOneMenu>-->
-                            <!--</div>-->
+
                             <div class="form-group">
                                 <h:inputText id="houseNumber" class="form-control" a:placeholder="House number"
                                              value="#{addressBean.houseNumber}">
@@ -147,10 +142,7 @@
                                     <h:message for="houseNumber" style="color:red"/>
                                 </div>
                             </div>
-                            <!--<div>-->
-                            <!--<p>houseNumber</p>-->
-                            <!--<h:inputText value="# {addressBean.houseNumber}"></h:inputText>-->
-                            <!--</div>-->
+
                             <h:commandButton value="Add new person" action="#{personBean.addNewPerson}"
                                              class="btn btn-lg btn-success btn-block">
                             </h:commandButton>

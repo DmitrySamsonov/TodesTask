@@ -23,7 +23,6 @@ public class AddressBean {
         addressDao = new AddressDao();
     }
 
-    // Checked!
     public Address getAddress() {
         Address address = new Address();
         try {
@@ -45,27 +44,12 @@ public class AddressBean {
                 }
                 address = addressDao.getAddressFromDatabase(address);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             LOGGER.error("Exception in AddressBean.getAddress. get address from db");
         }
 
         return address;
     }
-
-
-//    public void calculateStreetCode() {
-//        try {
-//            streetBean.calculateCodeByName();
-//            code = streetBean.getCode();
-//        } catch (Exception e) {
-//            LOGGER.error("Exception in AddressBean.calculateStreetCode(). " + e);
-//        }
-//    }
-
-//    public String getStreetNameByCode(Object obj) {
-//        int code = extractAddressObj(obj).getCode();
-//        return streetBean.getStreetNameByCode(code);
-//    }
 
 
     public Address extractAddressObj(Object item) {

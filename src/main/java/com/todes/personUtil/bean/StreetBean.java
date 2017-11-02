@@ -17,13 +17,12 @@ public class StreetBean {
     private String name;
 
 
-    // Checked!
     {
         streetDao = new StreetDao();
         FillStreetsAtStart();
     }
 
-    public StreetBean(){
+    public StreetBean() {
 
     }
 
@@ -38,31 +37,14 @@ public class StreetBean {
     }
 
 
-    // Checked!
     public List<String> getNamesList() {
         return streetDao.selectStreetNames();
     }
 
-    // Checked!
     public Street getStreet() {
         Street street = streetDao.getStreetByName(name);
         return street;
     }
-
-
-//    public void calculateCodeByName() {
-//        try {
-//            code = StreetDao.getCodeByName(name);
-//        } catch (Exception e) {
-//            LOGGER.error("Exception in StreetBean.calculateCodeByName(). e= " + e);
-//            LOGGER.info("name = " + getName()+"[in StreetBean.calculateCodeByName()]");
-//            LOGGER.info("code = " + getCode()+"[in StreetBean.calculateCodeByName()]");
-//        }
-//    }
-//
-//    public String getStreetNameByCode(int code) {
-//        return StreetDao.getNameByCode(code);
-//    }
 
 
     public int getCode() {

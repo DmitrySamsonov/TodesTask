@@ -112,14 +112,7 @@
         <div class="col-md-10 col-md-offset-1" style="margin-top: 5%">
             <p:dataTable id="personsTable" value="#{personBean.getPersonsList()}" var="obj">
 
-                <!--<p:column>-->
-                <!--<div class="thead-dark">-->
-                <!--<f:facet name="header">ID</f:facet>-->
-                <!--</div>-->
-                <!--# {personBean.extractPersonObj(obj).id}-->
-                <!--</p:column>-->
-
-                <p:column>
+                          <p:column>
                     <div class="thead-dark">
                         <f:facet name="header">Name</f:facet>
                     </div>
@@ -151,9 +144,7 @@
                     <div class="thead-dark">
                         <f:facet name="header">Date</f:facet>
                     </div>
-                    <!--<h:outputText value="#{personBean.extractPersonObj(obj).getDate()}">-->
-                    <!--<f:convertDateTime pattern="dd.MM.yyyy"/>-->
-                    <!--</h:outputText>-->
+
                     <h:outputText value="#{personBean.extractPersonObjDate(obj)}"/>
                 </p:column>
 
@@ -164,12 +155,7 @@
                     #{addressBean.extractAddressObj(obj).houseNumber}
                 </p:column>
 
-                <!--<p:column>-->
-                <!--<div class="thead-dark">-->
-                <!--<f:facet name="header">StreetCode</f:facet>-->
-                <!--</div>-->
-                <!--# {addressBean.extractAddressObj(obj).code}-->
-                <!--</p:column>-->
+
 
                 <p:column>
                     <div class="thead-dark">
@@ -179,23 +165,7 @@
                     #{addressBean.extractAddressObj(obj).street.name}
                 </p:column>
 
-                <!--<p:column>-->
-                <!--<div class="thead-dark">-->
-                <!--<f:facet name="header">Edit</f:facet>-->
-                <!--</div>-->
-                <!--<h:commandButton action="#{personBean.editPersonById(extractPersonObj(obj))}" value="Edit"-->
-                <!--styleClass="btn btn-primary"/>-->
-                <!--</p:column>-->
 
-                <!--<p:column>-->
-                    <!--<div class="thead-dark">-->
-                        <!--<f:facet name="header">Delete</f:facet>-->
-                    <!--</div>-->
-                    <!--<h:commandButton action="#{personBean.deletePersonById()}" value="Delete"-->
-                                     <!--styleClass="btn btn-danger">-->
-                        <!--<f:param name="PersonId" value="#{personBean.extractPersonObj(obj).id}"/>-->
-                    <!--</h:commandButton>-->
-                <!--</p:column>-->
             </p:dataTable>
         </div>
     </h:form>

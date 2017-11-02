@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -66,7 +65,6 @@ public class PersonBean {
                 && searchHouseNumber.isEmpty());
     }
 
-    // Checked!
     public Person extractPersonObj(Object item) {
         Object[] row = (Object[]) item;
         return (Person) row[0];
@@ -86,7 +84,6 @@ public class PersonBean {
     }
 
 
-    // Checked!
     public String addNewPerson() {
         LOGGER.info("------------addNewPerson-----------");
         try {
@@ -97,7 +94,6 @@ public class PersonBean {
         return "pagePersonsList.xhtml?faces-redirect=true";
     }
 
-    // Checked!
     private Person getPerson() {
         Person person = new Person();
         person.setName(name);
@@ -109,7 +105,6 @@ public class PersonBean {
         return person;
     }
 
-    // Checked!
     private Date parseDate(String date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         Date result = null;
@@ -119,11 +114,6 @@ public class PersonBean {
             LOGGER.error("Exception in PersonBean.parseDate(date). " + e);
         }
         return result;
-    }
-
-    public String deletePersonById() {
-        int personId = Integer.valueOf(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("PersonId"));
-        return personDao.deletePerson(personId);
     }
 
 
