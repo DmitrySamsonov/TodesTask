@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 >
 <h:head>
@@ -47,9 +46,6 @@
         </div>
     </nav>
 
-
-    <h2>Add new Person</h2>
-
     <div class="container">
         <div class="row vertical-offset-100">
             <div class="col-md-4 col-md-offset-4">
@@ -61,28 +57,35 @@
                         <h:form role="form">
 
                             <div class="form-group">
-                                <h:inputText class="form-control" value="#{personBean.name}" a:placeholder="Name"
-                                             required="true"
-                                             requiredMessage="Name is required"/>
+                                <h:panelGrid columns="3">
+                                    <h:inputText id="name" class="form-control" value="#{personBean.name}"
+                                                 a:placeholder="Name"
+                                                 required="true">
+                                        <!--<f:validator validatorId="com.todes.personUtil.validator.NameValidator"/>-->
+                                    </h:inputText>
+                                    <h:message for="name" style="color:red"/>
+                                </h:panelGrid>
                             </div>
                             <div class="form-group">
-                                <h:inputText class="form-control" value="#{personBean.surname}" a:placeholder="Surname"/>
+                                <h:inputText class="form-control" value="#{personBean.surname}"
+                                             a:placeholder="Surname"/>
                             </div>
                             <div class="form-group">
-                                <h:inputText class="form-control" value="#{personBean.patronymic}" a:placeholder="Patronymic"/>
+                                <h:inputText class="form-control" value="#{personBean.patronymic}"
+                                             a:placeholder="Patronymic"/>
                             </div>
                             <div class="form-group">
-                                    <label class="col-sm-12 col-form-label">Sex</label>
-                                    <p:selectOneRadio id="sexId" class="radio-inline" value="#{personBean.sex}" onblur="false">
-                                        <div class="col-sm-6">
-                                            <f:selectItems value="#{personBean.getSexStates()}"/>
-                                        </div>
-                                        <f:validateBean disabled="false"/>
-                                    </p:selectOneRadio>
-                                    <h:message id="m3" for="sexId" style="color:red"/>
+                                <label class="col-sm-3 ">Sex</label>
+                                <h:selectOneRadio id="sexId" value="#{personBean.sex}"
+                                                  onblur="false">
+                                    <div class="col-sm-6">
+                                        <f:selectItems value="#{personBean.getSexStates()}"/>
+                                    </div>
+                                    <f:validateBean disabled="false"/>
+                                </h:selectOneRadio>
+                                <h:message id="m3" for="sexId" style="color:red"/>
                             </div>
                             <div id="searchDate" class="form-group">
-                                <label class="col-sm-12 col-form-label">Birthday</label>
                                 <div class="input-group input-append date" id="datePicker">
                                     <h:inputText class="form-control" a:placeholder="Date of birth"
                                                  value="#{personBean.date}">
@@ -122,7 +125,8 @@
                             <!--<p>houseNumber</p>-->
                             <!--<h:inputText value="# {addressBean.houseNumber}"></h:inputText>-->
                             <!--</div>-->
-                            <h:commandButton value="Add new person" action="#{personBean.addNewPerson}" class="btn btn-lg btn-success btn-block">
+                            <h:commandButton value="Add new person" action="#{personBean.addNewPerson}"
+                                             class="btn btn-lg btn-success btn-block">
                             </h:commandButton>
                         </h:form>
                     </div>

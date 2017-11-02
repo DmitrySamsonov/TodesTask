@@ -9,9 +9,9 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
 
-        <class>model.Person</class>
-        <class>model.Address</class>
-        <class>model.Street</class>
+        <class>com.todes.personUtil.model.Person</class>
+        <class>com.todes.personUtil.model.Address</class>
+        <class>com.todes.personUtil.model.Street</class>
 
         <!--TODO maybe need delete-->
         <!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
