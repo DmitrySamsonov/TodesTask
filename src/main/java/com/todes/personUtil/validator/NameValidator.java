@@ -13,29 +13,44 @@ import java.util.regex.Pattern;
 @FacesValidator("com.todes.personUtil.validator.NameValidator")
 public class NameValidator implements Validator {
 
-    private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\." +
-            "[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*" +
-            "(\\.[A-Za-z]{2,})$";
+
+    private static final String NAME_PATTERN = "^[A-Za-z]*$";
+
 
     private Pattern pattern;
     private Matcher matcher;
 
     public NameValidator() {
-        pattern = Pattern.compile(EMAIL_PATTERN);
+        pattern = Pattern.compile(NAME_PATTERN);
     }
 
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-        matcher = pattern.matcher(value.toString());
-        if (!matcher.matches()) {
+        String inputText = value.toString();
 
-            FacesMessage msg = new FacesMessage("E-mail validation failed.", "Invalid E-mail format.");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            throw new ValidatorException(msg);
-
+        if (inputText.length() == 0) {
+            generateValidatorException("Please, enter Name.");
         }
 
+        if (!Character.isUpperCase(inputText.charAt(0))) {
+            generateValidatorException("Name must be start with Upper case.");
+        }
+
+        if (inputText.length() > 15) {
+            generateValidatorException("max Name length 15 symbols.");
+        }
+
+        matcher = pattern.matcher(inputText);
+        if (!matcher.matches()) {
+            generateValidatorException("Name must be consist of letters.");
+        }
+    }
+
+    private void generateValidatorException(String summary) {
+        FacesMessage msg = new FacesMessage(summary);
+        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+        throw new ValidatorException(msg);
     }
 }

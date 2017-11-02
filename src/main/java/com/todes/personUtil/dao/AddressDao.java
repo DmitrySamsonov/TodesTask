@@ -23,6 +23,7 @@ public class AddressDao {
             }
 
         } catch (Exception e) {
+            LOGGER.error("Exception in AddressDao.getAddressFromDatabase(address). " + e);
 
         }
 

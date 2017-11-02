@@ -57,22 +57,33 @@
                         <h:form role="form">
 
                             <div class="form-group">
-                                <h:panelGrid columns="3">
+                                <div>
                                     <h:inputText id="name" class="form-control" value="#{personBean.name}"
-                                                 a:placeholder="Name"
-                                                 required="true">
-                                        <!--<f:validator validatorId="com.todes.personUtil.validator.NameValidator"/>-->
+                                                 a:placeholder="Name">
+                                        <f:validator validatorId="com.todes.personUtil.validator.NameValidator"/>
                                     </h:inputText>
+                                </div>
+                                <div>
                                     <h:message for="name" style="color:red"/>
-                                </h:panelGrid>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <h:inputText class="form-control" value="#{personBean.surname}"
-                                             a:placeholder="Surname"/>
+                                <h:inputText id="surname" class="form-control" value="#{personBean.surname}"
+                                             a:placeholder="Surname">
+                                    <f:validator validatorId="com.todes.personUtil.validator.SurnameValidator"/>
+                                </h:inputText>
+                                <div>
+                                    <h:message for="surname" style="color:red"/>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <h:inputText class="form-control" value="#{personBean.patronymic}"
-                                             a:placeholder="Patronymic"/>
+                                <h:inputText id="patronymic" class="form-control" value="#{personBean.patronymic}"
+                                             a:placeholder="Patronymic">
+                                    <f:validator validatorId="com.todes.personUtil.validator.PatronymicValidator"/>
+                                </h:inputText>
+                                <div>
+                                    <h:message for="patronymic" style="color:red"/>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 ">Sex</label>
@@ -81,19 +92,25 @@
                                     <div class="col-sm-6">
                                         <f:selectItems value="#{personBean.getSexStates()}"/>
                                     </div>
-                                    <f:validateBean disabled="false"/>
+                                    <f:validator validatorId="com.todes.personUtil.validator.SexValidator"/>
                                 </h:selectOneRadio>
-                                <h:message id="m3" for="sexId" style="color:red"/>
+                                <div>
+                                    <h:message for="sexId" style="color:red"/>
+                                </div>
                             </div>
-                            <div id="searchDate" class="form-group">
+                            <div id="birthDay" class="form-group">
                                 <div class="input-group input-append date" id="datePicker">
-                                    <h:inputText class="form-control" a:placeholder="Date of birth"
+                                    <h:inputText id="inputDate" class="form-control" a:placeholder="Date of birth"
                                                  value="#{personBean.date}">
                                         <f:ajax event="change" execute="@this" render="personsForm cc"/>
+                                        <f:validator validatorId="com.todes.personUtil.validator.DateValidator"/>
                                     </h:inputText>
                                     <span id="span1" class="input-group-addon add-on">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
+                                </div>
+                                <div>
+                                    <h:message for="inputDate" style="color:red"/>
                                 </div>
                             </div>
                             <script>
@@ -106,10 +123,14 @@
                                 });
                             </script>
                             <div class="form-group">
-                                <h:selectOneMenu class="form-control" id="searchStreet" value="#{streetBean.name}">
+                                <h:selectOneMenu id="street" class="form-control" value="#{streetBean.name}">
                                     <f:selectItem itemLabel="--Select street--"/>
                                     <f:selectItems value="#{streetBean.getNamesList()}"/>
+                                    <f:validator validatorId="com.todes.personUtil.validator.StreetValidator"/>
                                 </h:selectOneMenu>
+                                <div>
+                                    <h:message for="street" style="color:red"/>
+                                </div>
                             </div>
                             <!--<div>-->
                             <!--<p>Street</p>-->
@@ -118,8 +139,13 @@
                             <!--</h:selectOneMenu>-->
                             <!--</div>-->
                             <div class="form-group">
-                                <h:inputText class="form-control" a:placeholder="House number" id="searchHouseNumber"
-                                             value="#{addressBean.houseNumber}"/>
+                                <h:inputText id="houseNumber" class="form-control" a:placeholder="House number"
+                                             value="#{addressBean.houseNumber}">
+                                    <f:validator validatorId="com.todes.personUtil.validator.HouseNumberValidator"/>
+                                </h:inputText>
+                                <div>
+                                    <h:message for="houseNumber" style="color:red"/>
+                                </div>
                             </div>
                             <!--<div>-->
                             <!--<p>houseNumber</p>-->

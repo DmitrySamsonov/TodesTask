@@ -35,7 +35,7 @@ public class PersonBean {
     @ManagedProperty(value = "#{addressBean}")
     private AddressBean addressBean;
 
-    public PersonBean(){
+    {
         personDao = new PersonDao();
     }
 
@@ -116,7 +116,7 @@ public class PersonBean {
         try {
             result = dateFormat.parse(date);
         } catch (Exception e) {
-            LOGGER.error(e);
+            LOGGER.error("Exception in PersonBean.parseDate(date). " + e);
         }
         return result;
     }

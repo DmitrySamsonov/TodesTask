@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedProperty;
 
 @ManagedBean
 public class AddressBean {
-    private static final Logger LOGGER = LogManager.getLogger(PersonBean.class);
+    private static final Logger LOGGER = LogManager.getLogger(AddressBean.class);
     private AddressDao addressDao;
 
     private int code;
@@ -19,8 +19,7 @@ public class AddressBean {
     @ManagedProperty(value = "#{streetBean}")
     private StreetBean streetBean;
 
-
-    public AddressBean() {
+    {
         addressDao = new AddressDao();
     }
 
@@ -31,19 +30,23 @@ public class AddressBean {
             address.setHouseNumber(houseNumber);
             address.setStreet(streetBean.getStreet());
         } catch (Exception e) {
-            LOGGER.error("Exception in AddressBean.getAddressFromBean(). " + e);
+            LOGGER.error("Exception in AddressBean.getAddress(). build address " + e);
         }
 
-        Address addressRow = addressDao.getAddressFromDatabase(address);
-        if (addressRow != null) {
-            address = addressRow;
-        } else {
-            try {
-                addressDao.createAddress(address);
-            } catch (Exception e) {
-                LOGGER.error("Exception in AddressBean.createAddress. " + e);
+        try {
+            Address addressRow = addressDao.getAddressFromDatabase(address);
+            if (addressRow != null) {
+                address = addressRow;
+            } else {
+                try {
+                    addressDao.createAddress(address);
+                } catch (Exception e) {
+                    LOGGER.error("Exception in AddressBean.getAddress(). create address in db " + e);
+                }
+                address = addressDao.getAddressFromDatabase(address);
             }
-            address = addressDao.getAddressFromDatabase(address);
+        }catch (Exception e){
+            LOGGER.error("Exception in AddressBean.getAddress. get address from db");
         }
 
         return address;

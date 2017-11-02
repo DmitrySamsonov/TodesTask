@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class DatabaseDao {
-    private static final Logger LOGGER = LogManager.getLogger(AddressDao.class);
+    private static final Logger LOGGER = LogManager.getLogger(DatabaseDao.class);
     private static DatabaseDao instance;
 
     private DatabaseDao() {
@@ -61,7 +61,7 @@ public class DatabaseDao {
             Query query = entityManagerObj.createQuery(jpql);
             result = query.getSingleResult();
         } catch (Exception e) {
-            LOGGER.error("Exception in DatabaseDao.delete(). " + e);
+            LOGGER.error("Exception in DatabaseDao.selectSingleResult(). " + e);
             throw e;
         }
 
@@ -76,7 +76,7 @@ public class DatabaseDao {
             Query query = entityManagerObj.createQuery(jpql);
             resultList = query.getResultList();
         } catch (Exception e) {
-            LOGGER.error("Exception in DatabaseDao.delete(). " + e);
+            LOGGER.error("Exception in DatabaseDao.selectResultList(). " + e);
             throw e;
         }
         return resultList;

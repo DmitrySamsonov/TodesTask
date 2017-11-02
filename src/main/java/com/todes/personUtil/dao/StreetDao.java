@@ -1,19 +1,14 @@
 package com.todes.personUtil.dao;
 
 import com.todes.personUtil.model.Street;
-import com.todes.personUtil.bean.PersonBean;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import java.util.List;
 
 public class StreetDao {
 
-    private static final Logger LOGGER = LogManager.getLogger(PersonBean.class);
+    private static final Logger LOGGER = LogManager.getLogger(StreetDao.class);
 
     public void fillStreetsByDefault() {
         createStreet(43, "Gagarina");
@@ -57,9 +52,13 @@ public class StreetDao {
     // Checked!
     public Street getStreetByName(String name) {
 
-        String jpql = "SELECT s FROM Street s WHERE s.name = '" + name + "'";
-        Street street = (Street) DatabaseDao.getInstance().selectSingleResult(jpql);
-
+        Street street = null;
+        try {
+            String jpql = "SELECT s FROM Street s WHERE s.name = '" + name + "'";
+            street = (Street) DatabaseDao.getInstance().selectSingleResult(jpql);
+        } catch (Exception e) {
+            LOGGER.error("Exception in StreetDao.getStreetByName(name). " + e);
+        }
         return street;
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 @ManagedBean
 public class StreetBean {
-    private static final Logger LOGGER = LogManager.getLogger(PersonBean.class);
+    private static final Logger LOGGER = LogManager.getLogger(StreetBean.class);
     private StreetDao streetDao;
 
     private int code;
