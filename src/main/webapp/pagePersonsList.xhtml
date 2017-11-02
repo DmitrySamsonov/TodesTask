@@ -187,15 +187,15 @@
                 <!--styleClass="btn btn-primary"/>-->
                 <!--</p:column>-->
 
-                <p:column>
-                    <div class="thead-dark">
-                        <f:facet name="header">Delete</f:facet>
-                    </div>
-                    <h:commandButton action="#{personBean.deletePersonById()}" value="Delete"
-                                     styleClass="btn btn-danger">
-                        <f:param name="PersonId" value="#{personBean.extractPersonObj(obj).id}"/>
-                    </h:commandButton>
-                </p:column>
+                <!--<p:column>-->
+                    <!--<div class="thead-dark">-->
+                        <!--<f:facet name="header">Delete</f:facet>-->
+                    <!--</div>-->
+                    <!--<h:commandButton action="#{personBean.deletePersonById()}" value="Delete"-->
+                                     <!--styleClass="btn btn-danger">-->
+                        <!--<f:param name="PersonId" value="#{personBean.extractPersonObj(obj).id}"/>-->
+                    <!--</h:commandButton>-->
+                <!--</p:column>-->
             </p:dataTable>
         </div>
     </h:form>
